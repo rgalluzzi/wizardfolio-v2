@@ -45,7 +45,7 @@ export default function OffersCard({
             type="button"
             disabled={!wealthsimpleReferralUrl}
             onClick={() => handleOpen(wealthsimpleReferralUrl)}
-            className="mt-2 inline-flex items-center rounded-full bg-zinc-900 px-3 py-1 text-[11px] font-semibold text-white shadow-sm hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+            className="mt-2 inline-flex items-center rounded-full bg-zinc-900 px-3 py-1 text-[11px] font-semibold text-white shadow-sm hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200 active:scale-95 transition"
           >
             Use Wealthsimple invite
           </button>
@@ -76,7 +76,7 @@ export default function OffersCard({
           type="button"
           disabled={!questradeReferralUrl}
           onClick={() => handleOpen(questradeReferralUrl)}
-          className="mt-2 inline-flex items-center rounded-full bg-zinc-900 px-3 py-1 text-[11px] font-semibold text-white shadow-sm hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+          className="mt-2 inline-flex items-center justify-center rounded-full bg-[#00A54F] px-3 py-1 text-[11px] font-semibold text-white shadow-sm hover:bg-[#009247] disabled:cursor-not-allowed disabled:opacity-40 active:scale-95 transition"
         >
           Use Questrade invite
         </button>
@@ -86,8 +86,7 @@ export default function OffersCard({
 
   return (
     <section className="rounded-3xl border border-zinc-200 bg-gradient-to-br from-amber-50 via-white to-sky-50 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/90 dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-900">
-      
-      {/* TITLE CHANGE REQUESTED */}
+      {/* TITLE */}
       <div className="mb-3 flex flex-col gap-1">
         <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-amber-700 dark:text-amber-400">
           Optional Perks
@@ -116,7 +115,7 @@ export default function OffersCard({
             </p>
             <p className="text-[10px] text-zinc-400 dark:text-zinc-500">
               For new clients only. Canadian residents (no Quebec). Funding/
-              spend rules apply; see Simplii's full terms.
+              spend rules apply; see Simplii&apos;s full terms.
             </p>
           </div>
 
@@ -124,7 +123,7 @@ export default function OffersCard({
             type="button"
             disabled={!simpliiReferralUrl}
             onClick={() => handleOpen(simpliiReferralUrl)}
-            className="mt-2 inline-flex items-center rounded-full bg-zinc-900 px-3 py-1 text-[11px] font-semibold text-white shadow-sm hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+            className="mt-2 inline-flex items-center justify-center rounded-full bg-[#FFCF33] px-3 py-1 text-[11px] font-semibold text-black shadow-sm hover:bg-[#F5C000] disabled:cursor-not-allowed disabled:opacity-40 active:scale-95 transition"
           >
             Use Simplii invite
           </button>

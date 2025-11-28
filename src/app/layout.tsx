@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Portfolio Look-Through",
+  title: "WizardFolio. Portfolio Look-Through",
   description: "See what you really own inside your ETFs.",
 };
 
@@ -18,7 +18,7 @@ export default function RootLayout({
           <header className="mb-4 flex items-center justify-between">
             <div>
               <h1 className="text-xl font-semibold tracking-tight">
-                Portfolio Look-Through
+                WizardFolio Portfolio Look-Through
               </h1>
               <p className="text-xs text-zinc-500 dark:text-zinc-400">
                 Type your ETF and stock mix as percentages and see your true

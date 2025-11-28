@@ -46,7 +46,14 @@ export default function ResultsPage() {
     setSlide(0);
   }, [positions]);
 
-  const handleEditInputs = () => router.push("/");
+  // Go back to home with same positions encoded in the URL
+  const handleEditInputs = () => {
+    if (positionsParam) {
+      router.push(`/?positions=${positionsParam}`);
+    } else {
+      router.push("/");
+    }
+  };
 
   const handleShare = async () => {
     const shareUrl = window.location.href;
@@ -110,9 +117,20 @@ export default function ResultsPage() {
 
   return (
     <div className="space-y-4">
+      {/* 🔝 Top header with title + Change ETFs button */}
+      <header className="flex items-center justify-between px-1 sm:px-0 pt-1 pb-1">
+        <button
+          type="button"
+          onClick={handleEditInputs}
+          className="rounded-full border border-zinc-300/80 bg-white/80 px-3 py-1 text-[11px] font-medium text-zinc-700 shadow-sm hover:bg-white active:scale-95 transition dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-100 dark:hover:bg-zinc-900"
+        >
+          Change ETFs
+        </button>
+      </header>
+
       {/* Gallery card (now 4 slides) */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-fuchsia-500 via-indigo-500 to-blue-600 p-px shadow-2xl shadow-pink-400/50">
-        {/* Share button in top-right */}
+        {/* Share button in top-right of card */}
         <button
           onClick={handleShare}
           className="absolute right-3 top-3 z-30 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 backdrop-blur border border-white/50 shadow-sm hover:bg-white dark:bg-zinc-800/70 dark:hover:bg-zinc-800"
@@ -264,11 +282,6 @@ export default function ResultsPage() {
               </button>
             ))}
           </div>
-        </div>
-
-        {/* Branding Overlay */}
-        <div className="absolute bottom-2 left-3 z-20 text-[10px] font-semibold tracking-wide text-white/70 dark:text-white/60">
-          Powered by <span className="text-white/90">WizardFolio</span>
         </div>
       </div>
 
