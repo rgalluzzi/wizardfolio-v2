@@ -34,6 +34,9 @@ type EtfProfile = {
   isBond: boolean;
 };
 
+const fmtPercent = (value: number | null | undefined) =>
+  (value ?? 0).toFixed(1).replace(/\.0$/, "");
+
 function getSymbolProfile(symbolRaw: string | undefined): EtfProfile {
   const base: EtfProfile = {
     techScore: 0.2,
@@ -312,14 +315,11 @@ export default function ExposureSummary({
 
         {/* Center label */}
         <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-          <p className="text-[10px] uppercase tracking-[0.25em] text-zinc-400 dark:text-zinc-500">
-            True Exposure
-          </p>
           <p className="mt-0.5 text-xs font-semibold text-zinc-900 dark:text-zinc-50">
             {classification}
           </p>
           <p className="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">
-            {total.toFixed(1)}.replace(/\.0$/, "")% • Top weights only
+            {fmtPercent(total)}% • Top weights only
           </p>
         </div>
 
@@ -330,7 +330,7 @@ export default function ExposureSummary({
               {hoveredSlice.label}
             </span>
             <span className="ml-1 text-white/80">
-              {hoveredSlice.weightPct.toFixed(1).replace(/\.0$/, "")}%
+              {fmtPercent(hoveredSlice.weightPct)}%
             </span>
           </div>
         )}
@@ -372,10 +372,10 @@ export default function ExposureSummary({
                 </span>
               </div>
               <span
-                className="px-1.5 py-0.5 rounded-md text-[10px] font-medium text-white tabular-nums"
+                className="px-1.5 py-0.5 rounded-md text-[10px] font-semibold text-white tabular-nums drop-shadow-[0_1px_1px_rgba(0,0,0,0.35)]"
                 style={{ backgroundColor: slice.color }}
               >
-                {slice.weightPct.toFixed(1)}%
+                {fmtPercent(slice.weightPct)}%
               </span>
             </li>
           ))}

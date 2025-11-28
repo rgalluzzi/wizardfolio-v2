@@ -55,34 +55,31 @@ export default function ResultsPage() {
     }
   };
 
-const handleShare = async () => {
-  const shareUrl = window.location.href;
+  const handleShare = async () => {
+    const shareUrl = window.location.href;
 
-  const shareData = {
-    title: "My Portfolio Exposure",
-    text: "Check out my portfolio look-through powered by WizardFolio",
-    url: shareUrl,
-  };
+    const shareData = {
+      title: "My Portfolio Exposure",
+      text: "Check out my portfolio look-through powered by WizardFolio",
+      url: shareUrl,
+    };
 
-  if (navigator.share) {
-    try {
-      await navigator.share(shareData);
-      return;
-    } catch (err) {
-      // If user cancels, just silently return
-      // If it fails for another reason, fall through to clipboard
-      console.warn("navigator.share failed, falling back to clipboard:", err);
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        return;
+      } catch (err) {
+        console.warn("navigator.share failed, falling back to clipboard:", err);
+      }
     }
-  }
 
-  try {
-    await navigator.clipboard.writeText(shareUrl);
-    alert("Link copied to clipboard!");
-  } catch (err) {
-    console.error("Failed to copy link:", err);
-  }
-};
-
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      alert("Link copied to clipboard!");
+    } catch (err) {
+      console.error("Failed to copy link:", err);
+    }
+  };
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) =>
     setTouchStartX(e.touches[0].clientX);
@@ -127,17 +124,6 @@ const handleShare = async () => {
 
   return (
     <div className="space-y-4">
-      {/* 🔝 Top header with title + Change ETFs button */}
-      <header className="flex items-center justify-between px-1 sm:px-0 pt-1 pb-1">
-        <button
-          type="button"
-          onClick={handleEditInputs}
-          className="rounded-full border border-zinc-300/80 bg-white/80 px-3 py-1 text-[11px] font-medium text-zinc-700 shadow-sm hover:bg-white active:scale-95 transition dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-100 dark:hover:bg-zinc-900"
-        >
-          Change ETFs
-        </button>
-      </header>
-
       {/* Gallery card (now 4 slides) */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-fuchsia-500 via-indigo-500 to-blue-600 p-px shadow-2xl shadow-pink-400/50">
         {/* Share button in top-right of card */}
@@ -149,14 +135,16 @@ const handleShare = async () => {
         </button>
 
         <div className="flex flex-col gap-4 rounded-3xl bg-white/95 p-5 dark:bg-zinc-900/80">
-          {/* Header inside card */}
-          <div className="flex flex-col gap-2">
-            <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
-              {title}
-            </h2>
-            <p className="text-xs text-zinc-600 dark:text-zinc-300">
-              Powered by WizardFolio • Swipe or tap the dots to explore.
-            </p>
+          {/* Header inside card (title + Change ETFs) */}
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex flex-col gap-1">
+              <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
+                {title}
+              </h2>
+              <p className="text-xs text-zinc-600 dark:text-zinc-300">
+                Powered by WizardFolio • Swipe or tap the dots to explore.
+              </p>
+            </div>
           </div>
 
           {/* Content block (4-slide gallery) */}
@@ -199,7 +187,7 @@ const handleShare = async () => {
                       </p>
                       <p className="text-[10px] text-zinc-400 dark:text-zinc-500">
                         For new clients only. Canadian residents (no Quebec).
-                        Funding/spend rules apply; see Simplii’s full
+                        Funding/spend rules apply; see Simplii&apos;s full
                         Refer-a-Friend terms.
                       </p>
                     </div>

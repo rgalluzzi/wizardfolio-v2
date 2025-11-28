@@ -1,0 +1,13 @@
+symbol,provider,url,format,notes
+VOO,Vanguard,,,"US-listed, no structured file available"
+VTI,Vanguard,,,"US-listed, no structured file available"
+VXUS,Vanguard,,,"US-listed, no structured file available"
+BND,Vanguard,,,"US-listed, no structured file available"
+VT,Vanguard,,,"US-listed, no structured file available"
+QQQ,Invesco,,,"US-listed, no structured file available"
+SPY,SPDR,https://www.ssga.com/library-content/products/fund-data/etfs/us/holdings-daily-us-en-spy.xlsx,**excel**,**"US-listed, auto-updating"**
+SCHD,Schwab,https://www.schwabassetmanagement.com/sites/g/files/eyrktu361/files/product_files/SCHD/SCHD_Fund_Holdings_Market_Open.CSV,**csv**,**"US-listed, auto-updating"**
+IVV,iShares,https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf/1521942788811.ajax?fileType=csv&fileName=iShares-Core-SP-500-ETF_fund&dataType=fund,**csv**,**"US-listed, auto-updating"**
+IJR,iShares,https://www.ishares.com/us/products/239774/ishares-core-sp-smallcap-etf/1521942788811.ajax?fileType=csv&fileName=iShares-Core-SP-Small-Cap-ETF_fund&dataType=fund,**csv**,**"US-listed, auto-updating"**
+IJH,iShares,https://www.ishares.com/us/products/239763/ishares-core-sp-midcap-etf/1521942788811.ajax?fileType=csv&fileName=iShares-Core-SP-Mid-Cap-ETF_fund&dataType=fund,**csv**,**"US-listed, auto-updating"**
+IEMG,iShares,https://www.ishares.com/us/products/244050/ishares-core-msci-emerging-markets-etf/1521942788811.ajax?fileType=csv&fileName=iShares-Core-MSCI-Emerging-Markets-ETF_fund&dataType=fund,**csv**,**"US-listed, auto-updating"**
