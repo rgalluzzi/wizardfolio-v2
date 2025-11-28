@@ -9,7 +9,6 @@ import {
 import ExposureSummary from "@/components/ExposureSummary";
 import HoldingsTable from "@/components/HoldingsTable";
 import RegionExposureChart from "@/components/RegionExposureChart";
-import OffersCard from "@/components/OffersCard";
 import { DEFAULT_POSITIONS } from "@/data/defaultPositions";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Share2 } from "lucide-react";
@@ -31,7 +30,7 @@ export default function ResultsPage() {
   }, [positionsParam]);
 
   const [exposure, setExposure] = useState<ExposureBreakdown[]>([]);
-  const [slide, setSlide] = useState<0 | 1 | 2>(0); // 0 = exposure, 1 = region, 2 = holdings
+  const [slide, setSlide] = useState<0 | 1 | 2 | 3>(0); // 0 = exposure, 1 = region, 2 = holdings, 3 = perks
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   const top10 = useMemo(
@@ -79,10 +78,10 @@ export default function ResultsPage() {
     if (Math.abs(deltaX) > 40) {
       if (deltaX < 0) {
         // left → next slide
-        setSlide((prev) => (prev === 2 ? 2 : ((prev + 1) as 0 | 1 | 2)));
+        setSlide((prev) => (prev === 3 ? 3 : ((prev + 1) as 0 | 1 | 2 | 3)));
       } else {
         // right → previous slide
-        setSlide((prev) => (prev === 0 ? 0 : ((prev - 1) as 0 | 1 | 2)));
+        setSlide((prev) => (prev === 0 ? 0 : ((prev - 1) as 0 | 1 | 2 | 3)));
       }
     }
 
@@ -97,14 +96,21 @@ export default function ResultsPage() {
         return "By region";
       case 2:
         return "Top holdings";
+      case 3:
+        return "Optional Perks";
       default:
         return "Your true exposure";
     }
   })();
 
+  const simpliiReferralUrl =
+    process.env.NEXT_PUBLIC_SIMPLII_REFERRAL_URL ?? "";
+  const questradeReferralUrl =
+    process.env.NEXT_PUBLIC_QUESTRADE_REFERRAL_URL ?? "";
+
   return (
     <div className="space-y-4">
-      {/* Gallery card */}
+      {/* Gallery card (now 4 slides) */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-fuchsia-500 via-indigo-500 to-blue-600 p-px shadow-2xl shadow-pink-400/50">
         {/* Share button in top-right */}
         <button
@@ -125,7 +131,7 @@ export default function ResultsPage() {
             </p>
           </div>
 
-          {/* Content block (3-slide gallery) */}
+          {/* Content block (4-slide gallery) */}
           <div
             className="rounded-2xl border border-zinc-100 bg-white/90 p-4 dark:border-zinc-800 dark:bg-zinc-900 min-h-[320px] flex flex-col justify-center"
             onTouchStart={handleTouchStart}
@@ -134,28 +140,117 @@ export default function ResultsPage() {
             {slide === 0 && (
               <ExposureSummary exposure={exposure} showHeader={false} />
             )}
+
             {slide === 1 && (
               <RegionExposureChart exposure={exposure} embedded />
             )}
+
             {slide === 2 && (
               <HoldingsTable exposure={top10} showHeader={false} />
             )}
+
+            {slide === 3 && (
+              <div className="space-y-3 text-xs sm:text-sm">
+                <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
+                  Completely optional — but if you’re already planning to open
+                  or move an account, these links can give both of us a small
+                  bonus.
+                </p>
+
+                <div className="grid gap-3 sm:grid-cols-2">
+                  {/* Simplii perk */}
+                  <div className="flex flex-col justify-between rounded-2xl border border-amber-100 bg-white/90 p-3 text-xs shadow-sm dark:border-amber-900/40 dark:bg-zinc-900">
+                    <div className="space-y-1">
+                      <p className="text-[11px] font-semibold text-amber-800 dark:text-amber-300">
+                        Simplii Financial™
+                      </p>
+                      <p className="text-[11px] text-zinc-700 dark:text-zinc-300">
+                        New to Simplii? Open an eligible no-fee account with my
+                        link and, once you meet the deposit or spend
+                        requirement, we both earn a cash reward.
+                      </p>
+                      <p className="text-[10px] text-zinc-400 dark:text-zinc-500">
+                        For new clients only. Canadian residents (no Quebec).
+                        Funding/spend rules apply; see Simplii’s full
+                        Refer-a-Friend terms.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      disabled={!simpliiReferralUrl}
+                      onClick={() =>
+                        simpliiReferralUrl &&
+                        window.open(
+                          simpliiReferralUrl,
+                          "_blank",
+                          "noopener,noreferrer"
+                        )
+                      }
+                      className="mt-2 inline-flex items-center rounded-full bg-zinc-900 px-3 py-1 text-[11px] font-semibold text-white shadow-sm hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+                    >
+                      Use Simplii invite
+                    </button>
+                  </div>
+
+                  {/* Questrade perk */}
+                  <div className="flex flex-col justify-between rounded-2xl border border-emerald-100 bg-white/90 p-3 text-xs shadow-sm dark:border-emerald-900/40 dark:bg-zinc-900">
+                    <div className="space-y-1">
+                      <p className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">
+                        Questrade
+                      </p>
+                      <p className="text-[11px] text-zinc-700 dark:text-zinc-300">
+                        Opening a Questrade self-directed or Questwealth
+                        account? Using my link and funding with at least $250
+                        unlocks a referral cash reward for both of us.
+                      </p>
+                      <p className="text-[10px] text-zinc-400 dark:text-zinc-500">
+                        For new Questrade clients only. Minimum funding, timing
+                        and account eligibility rules apply. Referral rewards
+                        count as contributions in registered accounts.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      disabled={!questradeReferralUrl}
+                      onClick={() =>
+                        questradeReferralUrl &&
+                        window.open(
+                          questradeReferralUrl,
+                          "_blank",
+                          "noopener,noreferrer"
+                        )
+                      }
+                      className="mt-2 inline-flex items-center rounded-full bg-zinc-900 px-3 py-1 text-[11px] font-semibold text-white shadow-sm hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
+                    >
+                      Use Questrade invite
+                    </button>
+                  </div>
+                </div>
+
+                <p className="text-[10px] text-zinc-400 dark:text-zinc-600">
+                  WizardFolio doesn’t run these promotions — they come directly
+                  from each institution. Always check their latest terms.
+                </p>
+              </div>
+            )}
           </div>
 
-          {/* Gallery dots: exposure • region • holdings */}
+          {/* Gallery dots: exposure • region • holdings • perks */}
           <div className="flex justify-center gap-2 pt-1">
-            {[0, 1, 2].map((idx) => (
+            {[0, 1, 2, 3].map((idx) => (
               <button
                 key={idx}
                 type="button"
-                onClick={() => setSlide(idx as 0 | 1 | 2)}
+                onClick={() => setSlide(idx as 0 | 1 | 2 | 3)}
                 className="group"
                 aria-label={
                   idx === 0
                     ? "Exposure"
                     : idx === 1
                     ? "Region"
-                    : "Holdings"
+                    : idx === 2
+                    ? "Holdings"
+                    : "Optional perks"
                 }
               >
                 <span
@@ -212,14 +307,6 @@ export default function ResultsPage() {
           Based on the mix you entered on the previous step.
         </p>
       </section>
-
-      {/* Offers card: Simplii + broker (Questrade or Wealthsimple) */}
-      <OffersCard
-        broker="questrade" // or "wealthsimple"
-        simpliiReferralUrl="https://blue.mbsy.co/789ll2"
-        wealthsimpleReferralUrl="www.wealthsimple.com/invite/SL6S1G"
-        questradeReferralUrl="https://start.questrade.com/?oaa_promo=646631628488027&s_cid=RAF14_share_link_refer_a_friend_email&utm_medium=share_link&utm_source=refer_a_friend&utm_campaign=RAF14&utm_content=personalized_link"
-      />
     </div>
   );
 }
