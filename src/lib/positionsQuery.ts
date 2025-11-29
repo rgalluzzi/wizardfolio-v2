@@ -53,6 +53,9 @@ export function parsePositionsParam(raw: RawPositionsParam): UserPosition[] {
   }
 
   const candidate = Array.isArray(raw) ? raw[0] : raw;
+  if (!candidate || typeof candidate !== "string") {
+    return [];
+  }
   let lastError: Error | null = null;
 
   const tryParse = (
@@ -80,16 +83,32 @@ export function parsePositionsParam(raw: RawPositionsParam): UserPosition[] {
     return directResult;
   }
 
-  try {
-    const decoded = decodeURIComponent(candidate ?? "");
-    if (decoded && decoded !== candidate) {
-      const decodedResult = tryParse(decoded);
-      if (decodedResult !== null) {
-        return decodedResult;
-      }
+  const seen = new Set<string>([candidate]);
+  let decoded = candidate;
+  let iterations = 0;
+
+  while (iterations < 3) {
+    iterations += 1;
+    let next: string;
+
+    try {
+      next = decodeURIComponent(decoded);
+    } catch (err) {
+      lastError = err instanceof Error ? err : new Error(String(err));
+      break;
     }
-  } catch (err) {
-    lastError = err instanceof Error ? err : new Error(String(err));
+
+    if (next === decoded || seen.has(next)) {
+      break;
+    }
+
+    seen.add(next);
+    decoded = next;
+
+    const decodedResult = tryParse(decoded);
+    if (decodedResult !== null) {
+      return decodedResult;
+    }
   }
 
   if (lastError) {

@@ -11,14 +11,18 @@ type ResultsPageProps = {
 
 export default function ResultsPage({ searchParams }: ResultsPageProps) {
   const parsed = parsePositionsParam(searchParams?.positions);
+  const hasPositionsParam = Boolean(searchParams?.positions);
   const positions =
     parsed.length > 0 ? parsed : (DEFAULT_POSITIONS as UserPosition[]);
-  const positionsQueryString = buildPositionsSearchParams(positions);
+  const positionsQueryString = parsed.length
+    ? buildPositionsSearchParams(parsed)
+    : "";
 
   return (
     <ResultsPageClient
       initialPositions={positions}
       positionsQueryString={positionsQueryString}
+      hasPositionsParam={hasPositionsParam}
     />
   );
 }

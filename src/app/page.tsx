@@ -5,7 +5,10 @@ import { useRouter } from "next/navigation";
 import PortfolioInput from "@/components/PortfolioInput";
 import { DEFAULT_POSITIONS } from "@/data/defaultPositions";
 import { UserPosition } from "@/lib/exposureEngine";
-import { buildPositionsSearchParams } from "@/lib/positionsQuery";
+import {
+  buildPositionsSearchParams,
+  normalizePositions,
+} from "@/lib/positionsQuery";
 
 export default function HomePage() {
   const router = useRouter();
@@ -16,7 +19,12 @@ export default function HomePage() {
   );
 
   const handleAnalyze = () => {
-    const params = buildPositionsSearchParams(positions);
+    const cleanedPositions = normalizePositions(positions);
+    if (!cleanedPositions.length) {
+      return;
+    }
+
+    const params = buildPositionsSearchParams(cleanedPositions);
     if (!params) {
       return;
     }

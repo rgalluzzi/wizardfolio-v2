@@ -1,12 +1,19 @@
 "use client";
 
-import { useEffect, useMemo, useState, type FormEvent, type TouchEvent } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type FormEvent,
+  type TouchEvent,
+} from "react";
 import ExposureSummary from "@/components/ExposureSummary";
 import HoldingsTable from "@/components/HoldingsTable";
 import RegionExposureChart from "@/components/RegionExposureChart";
 import { useRouter } from "next/navigation";
 import { AppleShareIcon } from "@/components/icons/AppleShareIcon";
 import { usePostHogSafe } from "@/lib/usePostHogSafe";
+import { normalizePositions } from "@/lib/positionsQuery";
 import { UserPosition } from "@/lib/exposureEngine";
 
 type ApiExposureRow = {
@@ -32,16 +39,26 @@ const FEATURE_OPTIONS = [
 type ResultsPageClientProps = {
   initialPositions: UserPosition[];
   positionsQueryString: string;
+  hasPositionsParam: boolean;
 };
+
+const EMPTY_POSITIONS_ERROR =
+  "At least one ETF with a non-empty symbol and positive weight is required";
 
 export default function ResultsPageClient({
   initialPositions,
   positionsQueryString,
+  hasPositionsParam,
 }: ResultsPageClientProps) {
   const router = useRouter();
   const { capture } = usePostHogSafe();
 
-  const positions = initialPositions;
+  const sanitizedPositions = useMemo(
+    () => normalizePositions(initialPositions),
+    [initialPositions]
+  );
+  const hasValidPositions = sanitizedPositions.length > 0;
+  const positions = hasValidPositions ? sanitizedPositions : initialPositions;
 
   const [exposure, setExposure] = useState<ApiExposureRow[]>([]);
   const [slide, setSlide] = useState<0 | 1 | 2 | 3>(0);
@@ -84,18 +101,25 @@ export default function ResultsPageClient({
   }, [slide, exposure.length, capture]);
 
   useEffect(() => {
+    if (!sanitizedPositions.length) {
+      setExposure([]);
+      setError(
+        hasPositionsParam ? EMPTY_POSITIONS_ERROR : null
+      );
+      setIsLoading(false);
+      setSlide(0);
+      return;
+    }
+
     const fetchExposure = async () => {
       setIsLoading(true);
       setError(null);
 
       try {
-        const etfs = positions.map((p) => p.symbol);
-        const weights = positions.map((p) => p.weightPct);
-
         const res = await fetch("/api/etf-exposure", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ etfs, weights }),
+          body: JSON.stringify({ positions: sanitizedPositions }),
         });
 
         const body = (await res.json().catch(() => null)) as
@@ -111,8 +135,8 @@ export default function ResultsPageClient({
         setExposure(holdings);
         capture("results_viewed", {
           num_holdings: holdings.length,
-          num_etfs: positions.length,
-          top_symbols: positions
+          num_etfs: sanitizedPositions.length,
+          top_symbols: sanitizedPositions
             .map((p) => p.symbol)
             .slice(0, 5),
         });
@@ -127,7 +151,7 @@ export default function ResultsPageClient({
 
         capture("exposure_error", {
           error_message: String(message).slice(0, 200),
-          num_etfs: positions.length,
+          num_etfs: sanitizedPositions.length,
         });
       } finally {
         setIsLoading(false);
@@ -136,7 +160,7 @@ export default function ResultsPageClient({
     };
 
     fetchExposure();
-  }, [positions, capture]);
+  }, [sanitizedPositions, capture, hasPositionsParam]);
 
   const handleEditInputs = () => {
     if (positionsQueryString) {

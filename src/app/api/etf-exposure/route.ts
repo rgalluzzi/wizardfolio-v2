@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
+import { UserPosition } from "@/lib/exposureEngine";
+import { normalizePositions } from "@/lib/positionsQuery";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -16,8 +18,7 @@ const CACHE_HEADERS = { "Cache-Control": "no-store" };
 const MAX_ETFS = 5;
 
 type EtfExposureRequest = {
-  etfs: string[];
-  weights: number[];
+  positions?: unknown;
 };
 
 type ExposureRow = {
@@ -33,9 +34,6 @@ type EtfExposureResponse = {
   exposure: ExposureRow[];
 };
 
-const isNumberArray = (values: unknown[]): values is number[] =>
-  values.every((value) => typeof value === "number" && Number.isFinite(value));
-
 export async function POST(req: NextRequest) {
   try {
     const contentType = req.headers.get("content-type");
@@ -46,63 +44,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const payload = (await req.json()) as Partial<EtfExposureRequest>;
+    const payload = (await req.json()) as EtfExposureRequest | null;
 
-    if (!payload || !Array.isArray(payload.etfs) || !Array.isArray(payload.weights)) {
+    if (!payload || !Array.isArray(payload.positions)) {
       return NextResponse.json(
-        { error: "Payload must include etfs and weights arrays" },
+        { error: "Payload must include a positions array" },
         { status: 400, headers: CACHE_HEADERS },
       );
     }
 
-    if (payload.etfs.length === 0) {
-      return NextResponse.json(
-        { error: "At least one ETF symbol is required" },
-        { status: 400, headers: CACHE_HEADERS },
-      );
-    }
-
-    if (payload.etfs.length !== payload.weights.length) {
-      return NextResponse.json(
-        { error: "ETF symbols and weights must have the same length" },
-        { status: 400, headers: CACHE_HEADERS },
-      );
-    }
-
-    if (payload.etfs.length > MAX_ETFS) {
-      return NextResponse.json(
-        { error: "You can analyze up to 5 ETFs at a time." },
-        { status: 400, headers: CACHE_HEADERS },
-      );
-    }
-
-    if (!isNumberArray(payload.weights)) {
-      return NextResponse.json(
-        { error: "Weights must be finite numbers" },
-        { status: 400, headers: CACHE_HEADERS },
-      );
-    }
-
-    // 1) Normalize / trim symbols
-    const rawEtfs = payload.etfs.map((symbol) =>
-      typeof symbol === "string" ? symbol.trim() : "",
+    const cleanedPositions: UserPosition[] = normalizePositions(
+      payload.positions,
     );
 
-    // 2) Pair with weights and DROP invalid entries
-    const cleanedPairs = rawEtfs
-      .map((symbol, index) => ({
-        symbol,
-        weight: payload.weights![index],
-      }))
-      .filter(
-        (item) =>
-          item.symbol.length > 0 &&
-          typeof item.weight === "number" &&
-          Number.isFinite(item.weight) &&
-          item.weight > 0,
-      );
-
-    if (!cleanedPairs.length) {
+    if (!cleanedPositions.length) {
       return NextResponse.json(
         {
           error:
@@ -112,10 +67,16 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const etfs = cleanedPairs.map((item) => item.symbol);
-    const weights = cleanedPairs.map((item) => item.weight);
+    if (cleanedPositions.length > MAX_ETFS) {
+      return NextResponse.json(
+        { error: "You can analyze up to 5 ETFs at a time." },
+        { status: 400, headers: CACHE_HEADERS },
+      );
+    }
 
-    // Call Supabase RPC with cleaned arrays
+    const etfs = cleanedPositions.map((item) => item.symbol);
+    const weights = cleanedPositions.map((item) => item.weightPct);
+
     const { data, error } = await supabase.rpc("calculate_exposure", {
       etfs,
       weights,
