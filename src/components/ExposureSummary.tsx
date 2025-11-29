@@ -27,10 +27,10 @@ type Slice = {
 };
 
 type EtfProfile = {
-  techScore: number;
-  usShare: number;
-  caShare: number;
-  intlShare: number;
+  techScore: number; // 0–1 how tech-heavy
+  usShare: number;   // 0–1
+  caShare: number;   // 0–1
+  intlShare: number; // 0–1
   isBond: boolean;
 };
 
@@ -52,30 +52,34 @@ function getSymbolProfile(symbolRaw: string | undefined): EtfProfile {
   const plain = symbol.replace(".TO", "");
   const isAny = (...codes: string[]) => codes.includes(plain);
 
+  // Bonds / fixed income
   if (isAny("BND", "ZAG", "XBB", "VAB")) {
     return { techScore: 0, usShare: 0, caShare: 0, intlShare: 0, isBond: true };
   }
 
+  // U.S. large cap broad (S&P 500, etc.)
   if (isAny("SPY", "VOO", "IVV", "ZSP", "HXS", "VFV", "VFV.TO")) {
     return {
       techScore: 0.4,
       usShare: 0.9,
-      caShare: 0,
+      caShare: 0.0,
       intlShare: 0.1,
       isBond: false,
     };
   }
 
+  // Nasdaq / heavy tech
   if (isAny("QQQ", "QQQM", "ZQQ", "HXQ")) {
     return {
       techScore: 1.0,
       usShare: 0.95,
-      caShare: 0,
+      caShare: 0.0,
       intlShare: 0.05,
       isBond: false,
     };
   }
 
+  // All-equity global one-ticket (VEQT/XEQT etc.)
   if (isAny("VEQT", "XEQT", "VEQT.TO", "XEQT.TO")) {
     return {
       techScore: 0.3,
@@ -86,6 +90,7 @@ function getSymbolProfile(symbolRaw: string | undefined): EtfProfile {
     };
   }
 
+  // Balanced/global growth (VGRO/VBAL etc.)
   if (isAny("VGRO", "VBAL", "VGRO.TO", "VBAL.TO", "XGRO", "XBAL")) {
     return {
       techScore: 0.2,
@@ -96,46 +101,51 @@ function getSymbolProfile(symbolRaw: string | undefined): EtfProfile {
     };
   }
 
+  // Canada equity (XIU, ZCN, VCN, XIC)
   if (isAny("XIU", "ZCN", "VCN", "XIC")) {
     return {
       techScore: 0.1,
-      usShare: 0,
+      usShare: 0.0,
       caShare: 0.9,
       intlShare: 0.1,
       isBond: false,
     };
   }
 
+  // International developed (XEF/ZEA)
   if (isAny("XEF", "ZEA", "VIU")) {
     return {
       techScore: 0.15,
-      usShare: 0,
-      caShare: 0,
+      usShare: 0.0,
+      caShare: 0.0,
       intlShare: 1.0,
       isBond: false,
     };
   }
 
+  // Emerging markets (XEC/ZEM)
   if (isAny("XEC", "ZEM", "VEE")) {
     return {
       techScore: 0.1,
-      usShare: 0,
-      caShare: 0,
+      usShare: 0.0,
+      caShare: 0.0,
       intlShare: 1.0,
       isBond: false,
     };
   }
 
+  // Dividend / value-ish (SCHD, VDY, ZDY)
   if (isAny("SCHD", "VDY", "ZDY")) {
     return {
       techScore: 0.15,
       usShare: 0.7,
-      caShare: plain === "VDY" ? 0.6 : 0,
+      caShare: plain === "VDY" ? 0.6 : 0.0,
       intlShare: plain === "VDY" ? 0.4 : 0.3,
       isBond: false,
     };
   }
 
+  // Fallback: global equity, light tech tilt
   return base;
 }
 
@@ -209,7 +219,7 @@ export default function ExposureSummary({
   const slices: Slice[] = React.useMemo(() => {
     if (!sorted.length || total <= 0) return [];
 
-    const MAX_SLICES = 6;
+    const MAX_SLICES = 6; // Top 5 + Other
     const main = sorted.slice(0, MAX_SLICES - 1);
     const rest = sorted.slice(MAX_SLICES - 1);
 
@@ -266,11 +276,9 @@ export default function ExposureSummary({
   let cumulative = 0;
 
   return (
-    <div className="flex flex-col items-center gap-6 md:flex-row md:items-center md:justify-between">
-      
-
+    <div className="flex w-full flex-col items-center gap-6 md:flex-row md:items-center md:justify-between md:gap-10">
       {/* Donut */}
-      <div className="relative h-56 w-56">
+      <div className="relative h-56 w-56 md:h-60 md:w-60">
         <svg viewBox="0 0 220 220" className="h-full w-full">
           <g transform={`rotate(-90 ${CENTER} ${CENTER})`}>
             {slices.map((slice, index) => {
@@ -306,33 +314,33 @@ export default function ExposureSummary({
         </svg>
 
         {/* Center label */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-          <p className="mt-0.5 text-xs font-semibold text-zinc-900 dark:text-zinc-50">
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center text-center">
+          <p className="mt-0.5 text-sm font-medium tracking-tight text-zinc-900 dark:text-zinc-50 md:text-[15px]">
             {classification}
           </p>
-          <p className="mt-0.5 text-[11px] text-zinc-500 dark:text-zinc-400">
+          <p className="mt-0.5 text-[11px] text-zinc-500 tabular-nums dark:text-zinc-400">
             {fmtPercent(total)}% • Top weights only
           </p>
         </div>
 
         {/* Hover tooltip */}
         {hoveredSlice && (
-          <div className="pointer-events-none absolute left-1/2 top-3 -translate-x-1/2 rounded-full bg-black/80 px-3 py-1 text-[11px] text-white shadow-lg dark:bg-black/90">
-            <span className="font-semibold">
+          <div className="pointer-events-none absolute left-1/2 top-3 -translate-x-1/2 rounded-full bg-black/80 px-3 py-1 text-[11px] text-white shadow-lg backdrop-blur-sm dark:bg-black/90">
+            <span className="font-medium">
               {hoveredSlice.label}
             </span>
-            <span className="ml-1 text-white/80">
+            <span className="ml-1 tabular-nums text-white/80">
               {fmtPercent(hoveredSlice.weightPct)}%
             </span>
           </div>
         )}
       </div>
 
-      {/* Breakdown list */}
+      {/* Breakdown list with % badges */}
       <div className="flex-1 space-y-3">
         {showHeader && (
           <div className="space-y-1">
-            <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+            <h3 className="text-sm font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
               Exposure breakdown
             </h3>
             <p className="text-xs text-zinc-500 dark:text-zinc-400">
@@ -346,55 +354,50 @@ export default function ExposureSummary({
           % of your portfolio
         </p>
 
-<ul className="space-y-1.5">
-  {slices.map((slice, index) => (
-    <li
-      key={`${slice.label}-${index}`}
-      className="flex items-center justify-between"
-      onMouseEnter={() => setHoveredIndex(index)}
-      onMouseLeave={() => setHoveredIndex(null)}
-    >
-      {/* Left: label with responsive text */}
-      <div className="flex items-center gap-2 text-xs sm:text-sm">
-        <span
-          className="h-2.5 w-2.5 rounded-full"
-          style={{ backgroundColor: slice.color }}
-        />
-        <span className="font-medium text-zinc-800 dark:text-zinc-100">
-          {slice.label}
-        </span>
-      </div>
+        <ul className="space-y-1.5">
+          {slices.map((slice, index) => (
+            <li
+              key={`${slice.label}-${index}`}
+              className="flex items-center justify-between"
+              onMouseEnter={() => setHoveredIndex(index)}
+              onMouseLeave={() => setHoveredIndex(null)}
+            >
+              {/* Left: label with responsive text */}
+              <div className="flex items-center gap-2 text-xs sm:text-sm">
+                <span
+                  className="h-2.5 w-2.5 rounded-full"
+                  style={{ backgroundColor: slice.color }}
+                />
+                <span className="font-medium text-zinc-800 dark:text-zinc-100">
+                  {slice.label}
+                </span>
+              </div>
 
-      {/* Right: fixed-width % badge */}
-<span
-  className="
-    inline-flex 
-    w-12
-    justify-end
-    px-2 py-1
-    rounded-full
-    text-[13px]
-    font-medium
-    leading-none
-    text-white
-    tabular-nums
-    backdrop-blur-sm
-    bg-white/10
-    ring-1 ring-white/20
-  "
-  style={{ backgroundColor: slice.color }}
->
-  {fmtPercent(slice.weightPct)}%
-</span>
+              {/* Right: Apple-like fixed-width % badge */}
+              <span
+                className="
+                  inline-flex 
+                  w-12
+                  justify-end 
+                  px-2 py-1
+                  rounded-full
+                  text-[13px]
+                  leading-none 
+                  font-medium
+                  text-white 
+                  tabular-nums
+                  backdrop-blur-sm
+                  ring-1 ring-white/20
+                "
+                style={{ backgroundColor: slice.color }}
+              >
+                {fmtPercent(slice.weightPct)}%
+              </span>
+            </li>
+          ))}
+        </ul>
 
-
-    </li>
-  ))}
-</ul>
-
-
-
-        <p className="text-[11px] text-zinc-400 dark:text-zinc-500 pt-1">
+        <p className="pt-1 text-[11px] text-zinc-400 dark:text-zinc-500">
           Showing top {Math.min(slices.length, 6)} exposures in a clean view.
         </p>
       </div>

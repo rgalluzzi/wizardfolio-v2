@@ -1,0 +1,290 @@
+etf_symbol,holding_symbol,holding_name,weight_pct,country,sector,asset_class,nav_date,provider,fund_url
+
+HHIS,Harvest Broadcom Enhanced High Income Shares ETF,Harvest Broadcom Enhanced High Income Shares ETF,8.4,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest NVIDIA Enhanced High Income Shares ETF,Harvest NVIDIA Enhanced High Income Shares ETF,8.2,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Alphabet Enhanced High Income Shares ETF,Harvest Alphabet Enhanced High Income Shares ETF,8.0,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Tesla Enhanced High Income Shares ETF,Harvest Tesla Enhanced High Income Shares ETF,7.5,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest AMD Enhanced High Income Shares ETF,Harvest AMD Enhanced High Income Shares ETF,7.4,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Palantir Enhanced High Income Shares ETF,Harvest Palantir Enhanced High Income Shares ETF,7.0,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Microsoft Enhanced High Income Shares ETF,Harvest Microsoft Enhanced High Income Shares ETF,6.8,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Apple Enhanced High Income Shares ETF,Harvest Apple Enhanced High Income Shares ETF,6.6,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Amazon Enhanced High Income Shares ETF,Harvest Amazon Enhanced High Income Shares ETF,6.4,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Eli Lilly Enhanced High Income Shares ETF,Harvest Eli Lilly Enhanced High Income Shares ETF,5.7,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Meta Enhanced High Income Shares ETF,Harvest Meta Enhanced High Income Shares ETF,5.5,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Netflix Enhanced High Income Shares ETF,Harvest Netflix Enhanced High Income Shares ETF,5.4,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Coinbase Enhanced High Income Shares ETF,Harvest Coinbase Enhanced High Income Shares ETF,5.2,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Costco Enhanced High Income Shares ETF,Harvest Costco Enhanced High Income Shares ETF,4.5,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Microstrategy Enhanced High Income Shares ETF,Harvest Microstrategy Enhanced High Income Shares ETF,3.7,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Circle Enhanced High Income Shares ETF,Harvest Circle Enhanced High Income Shares ETF,0.9,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Robinhood Enhanced High Income Shares ETF,Harvest Robinhood Enhanced High Income Shares ETF,0.9,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest Reddit Enhanced High Income Shares ETF,Harvest Reddit Enhanced High Income Shares ETF,0.9,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,Harvest SoFi Enhanced High Income Shares ETF,Harvest SoFi Enhanced High Income Shares ETF,0.9,Canada,Equity,Equity,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+HHIS,CASH,Cash and other assets and liabilities,0.1,Canada,Cash,Cash,2025-10-31,Harvest,https://harvestportfolios.com/high-income-shares/hhis/
+
+VOO,NVDA,NVIDIA Corp,8.46,United States,Information Technology,Equity,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/voo
+VOO,AAPL,Apple Inc,6.87,United States,Information Technology,Equity,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/voo
+VOO,MSFT,Microsoft Corp,6.59,United States,Information Technology,Equity,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/voo
+VOO,AMZN,Amazon.com Inc,4.06,United States,Consumer Discretionary,Equity,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/voo
+VOO,AVGO,Broadcom Inc,2.98,United States,Information Technology,Equity,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/voo
+VOO,GOOGL,Alphabet Inc Class A,2.80,United States,Communication Services,Equity,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/voo
+VOO,META,Meta Platforms Inc,2.41,United States,Communication Services,Equity,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/voo
+VOO,GOOG,Alphabet Inc Class C,2.25,United States,Communication Services,Equity,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/voo
+VOO,TSLA,Tesla Inc,2.19,United States,Consumer Discretionary,Equity,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/voo
+VOO,BRK.B,Berkshire Hathaway Inc Class B,1.50,United States,Financials,Equity,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/voo
+
+QQQ,NVDA,NVIDIA Corp,9.33,United States,Information Technology,Equity,2025-11-26,Invesco,https://www.invesco.com/qqq-etf/en/about.html
+QQQ,AAPL,Apple Inc,8.77,United States,Information Technology,Equity,2025-11-26,Invesco,https://www.invesco.com/qqq-etf/en/about.html
+QQQ,MSFT,Microsoft Corp,7.70,United States,Information Technology,Equity,2025-11-26,Invesco,https://www.invesco.com/qqq-etf/en/about.html
+QQQ,AVGO,Broadcom Inc,6.59,United States,Information Technology,Equity,2025-11-26,Invesco,https://www.invesco.com/qqq-etf/en/about.html
+QQQ,AMZN,Amazon.com Inc,5.20,United States,Consumer Discretionary,Equity,2025-11-26,Invesco,https://www.invesco.com/qqq-etf/en/about.html
+QQQ,GOOGL,Alphabet Inc Class A,3.96,United States,Communication Services,Equity,2025-11-26,Invesco,https://www.invesco.com/qqq-etf/en/about.html
+QQQ,GOOG,Alphabet Inc Class C,3.70,United States,Communication Services,Equity,2025-11-26,Invesco,https://www.invesco.com/qqq-etf/en/about.html
+QQQ,TSLA,Tesla Inc,3.31,United States,Consumer Discretionary,Equity,2025-11-26,Invesco,https://www.invesco.com/qqq-etf/en/about.html
+QQQ,META,Meta Platforms Inc,2.93,United States,Communication Services,Equity,2025-11-26,Invesco,https://www.invesco.com/qqq-etf/en/about.html
+QQQ,NFLX,Netflix Inc,2.36,United States,Communication Services,Equity,2025-11-26,Invesco,https://www.invesco.com/qqq-etf/en/about.html
+
+SPY,NVDA,NVIDIA Corporation,7.57,United States,Information Technology,Equity,2025-11-26,SPDR,https://www.ssga.com/us/en/intermediary/etfs/spdr-sp-500-etf-trust-spy
+SPY,AAPL,Apple Inc,7.09,United States,Information Technology,Equity,2025-11-26,SPDR,https://www.ssga.com/us/en/intermediary/etfs/spdr-sp-500-etf-trust-spy
+SPY,MSFT,Microsoft Corporation,6.21,United States,Information Technology,Equity,2025-11-26,SPDR,https://www.ssga.com/us/en/intermediary/etfs/spdr-sp-500-etf-trust-spy
+SPY,AMZN,Amazon.com Inc,3.83,United States,Consumer Discretionary,Equity,2025-11-26,SPDR,https://www.ssga.com/us/en/intermediary/etfs/spdr-sp-500-etf-trust-spy
+SPY,AVGO,Broadcom Inc,3.22,United States,Information Technology,Equity,2025-11-26,SPDR,https://www.ssga.com/us/en/intermediary/etfs/spdr-sp-500-etf-trust-spy
+SPY,GOOGL,Alphabet Inc Class A,3.20,United States,Communication Services,Equity,2025-11-26,SPDR,https://www.ssga.com/us/en/intermediary/etfs/spdr-sp-500-etf-trust-spy
+SPY,GOOG,Alphabet Inc Class C,2.57,United States,Communication Services,Equity,2025-11-26,SPDR,https://www.ssga.com/us/en/intermediary/etfs/spdr-sp-500-etf-trust-spy
+SPY,META,Meta Platforms Inc Class A,2.37,United States,Communication Services,Equity,2025-11-26,SPDR,https://www.ssga.com/us/en/intermediary/etfs/spdr-sp-500-etf-trust-spy
+SPY,TSLA,Tesla Inc,2.06,United States,Consumer Discretionary,Equity,2025-11-26,SPDR,https://www.ssga.com/us/en/intermediary/etfs/spdr-sp-500-etf-trust-spy
+SPY,BRK.B,Berkshire Hathaway Inc Class B,1.61,United States,Financials,Equity,2025-11-26,SPDR,https://www.ssga.com/us/en/intermediary/etfs/spdr-sp-500-etf-trust-spy
+
+VTI,NVDA,NVIDIA Corp,6.70,United States,Information Technology,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vti
+VTI,MSFT,Microsoft Corp,6.00,United States,Information Technology,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vti
+VTI,AAPL,Apple Inc,5.90,United States,Information Technology,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vti
+VTI,AMZN,Amazon.com Inc,3.30,United States,Consumer Discretionary,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vti
+VTI,META,Meta Platforms Inc,2.50,United States,Communication Services,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vti
+VTI,AVGO,Broadcom Inc,2.40,United States,Information Technology,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vti
+VTI,GOOGL,Alphabet Inc Class A,2.20,United States,Communication Services,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vti
+VTI,TSLA,Tesla Inc,1.90,United States,Consumer Discretionary,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vti
+VTI,GOOG,Alphabet Inc Class C,1.80,United States,Communication Services,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vti
+VTI,BRK.B,Berkshire Hathaway Inc Class B,1.40,United States,Financials,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vti
+
+VXUS,TSM,Taiwan Semiconductor Manufacturing Co Ltd,2.80,Taiwan,Information Technology,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vxus
+VXUS,TCEHY,Tencent Holdings Ltd,1.40,China,Communication Services,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vxus
+VXUS,BABA,Alibaba Group Holding Ltd,1.10,China,Consumer Discretionary,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vxus
+VXUS,ASML,ASML Holding NV,1.00,Netherlands,Information Technology,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vxus
+VXUS,SSNLF,Samsung Electronics Co Ltd,0.80,South Korea,Information Technology,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vxus
+VXUS,SAP,SAP SE,0.70,Germany,Information Technology,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vxus
+VXUS,HSBC,HSBC Holdings plc,0.70,United Kingdom,Financials,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vxus
+VXUS,RHHBY,Roche Holding AG,0.60,Switzerland,Health Care,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vxus
+VXUS,NVS,Novartis AG,0.60,Switzerland,Health Care,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vxus
+VXUS,NSRGY,Nestle SA,0.60,Switzerland,Consumer Staples,Equity,2025-09-30,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/vxus
+
+BND,Federal National Mortgage Assn,Federal National Mortgage Assn 2.000 2027-2055,1.52,United States,Government Bonds,Fixed Income,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/bnd
+BND,Federal National Mortgage Assn,Federal National Mortgage Assn 2.500 2026-2054,1.18,United States,Government Bonds,Fixed Income,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/bnd
+BND,Federal Home Loan Mortgage Corp,Federal Home Loan Mortgage Corp 2.000 2028-2052,1.14,United States,Government Bonds,Fixed Income,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/bnd
+BND,Federal Home Loan Mortgage Corp,Federal Home Loan Mortgage Corp 5.500 2026-2055,0.98,United States,Government Bonds,Fixed Income,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/bnd
+BND,Federal Home Loan Mortgage Corp,Federal Home Loan Mortgage Corp 6.000 2026-2055,0.95,United States,Government Bonds,Fixed Income,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/bnd
+BND,Federal National Mortgage Assn,Federal National Mortgage Assn 3.000 2025-2055,0.88,United States,Government Bonds,Fixed Income,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/bnd
+BND,Federal National Mortgage Assn,Federal National Mortgage Assn 6.000 2026-2055,0.79,United States,Government Bonds,Fixed Income,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/bnd
+BND,Federal Home Loan Mortgage Corp,Federal Home Loan Mortgage Corp 2.500 2027-2053,0.78,United States,Government Bonds,Fixed Income,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/bnd
+BND,Government National Mortgage Assn,Government National Mortgage Assn 5.500 2041-2055,0.78,United States,Government Bonds,Fixed Income,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/bnd
+BND,Federal National Mortgage Assn,Federal National Mortgage Assn 5.500 2025-2055,0.76,United States,Government Bonds,Fixed Income,2025-10-31,Vanguard,https://investor.vanguard.com/investment-products/etfs/profile/bnd
+
+SCHD,MRK,Merck and Co Inc,4.98,United States,Health Care,Equity,2025-11-28,Schwab,https://www.schwabassetmanagement.com/products/schd
+SCHD,AMGN,Amgen Inc,4.86,United States,Health Care,Equity,2025-11-28,Schwab,https://www.schwabassetmanagement.com/products/schd
+SCHD,CSCO,Cisco Systems Inc,4.50,United States,Information Technology,Equity,2025-11-28,Schwab,https://www.schwabassetmanagement.com/products/schd
+SCHD,ABBV,AbbVie Inc,4.30,United States,Health Care,Equity,2025-11-28,Schwab,https://www.schwabassetmanagement.com/products/schd
+SCHD,KO,Coca-Cola Co,4.23,United States,Consumer Staples,Equity,2025-11-28,Schwab,https://www.schwabassetmanagement.com/products/schd
+SCHD,BMY,Bristol Myers Squibb,4.03,United States,Health Care,Equity,2025-11-28,Schwab,https://www.schwabassetmanagement.com/products/schd
+SCHD,PEP,PepsiCo Inc,3.99,United States,Consumer Staples,Equity,2025-11-28,Schwab,https://www.schwabassetmanagement.com/products/schd
+SCHD,CVX,Chevron Corp,3.79,United States,Energy,Equity,2025-11-28,Schwab,https://www.schwabassetmanagement.com/products/schd
+SCHD,LMT,Lockheed Martin Corp,3.76,United States,Industrials,Equity,2025-11-28,Schwab,https://www.schwabassetmanagement.com/products/schd
+SCHD,VZ,Verizon Communications Inc,3.74,United States,Communication Services,Equity,2025-11-28,Schwab,https://www.schwabassetmanagement.com/products/schd
+
+VDY.TO,RY,Royal Bank of Canada,15.16917,Canada,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf
+VDY.TO,TD,Toronto Dominion Bank,10.30228,Canada,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf
+VDY.TO,ENB,Enbridge Inc,7.42812,Canada,Energy,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf
+VDY.TO,BMO,Bank of Montreal,6.53080,Canada,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf
+VDY.TO,BNS,Bank of Nova Scotia,5.97920,Canada,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf
+VDY.TO,CM,Canadian Imperial Bank of Commerce,5.68565,Canada,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf
+VDY.TO,CNQ,Canadian Natural Resources Ltd,4.83985,Canada,Energy,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf
+VDY.TO,MFC,Manulife Financial Corp,4.03282,Canada,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf
+VDY.TO,TRP,TC Energy Corp,3.80643,Canada,Energy,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf
+VDY.TO,SU,Suncor Energy Inc,3.54964,Canada,Energy,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf
+
+VFV.TO,NVDA,NVIDIA Corp,8.46097,United States,Information Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf
+VFV.TO,AAPL,Apple Inc,6.87108,United States,Information Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf
+VFV.TO,MSFT,Microsoft Corp,6.59133,United States,Information Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf
+VFV.TO,AMZN,Amazon.com Inc,4.05889,United States,Consumer Discretionary,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf
+VFV.TO,AVGO,Broadcom Inc,2.97727,United States,Information Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf
+VFV.TO,GOOGL,Alphabet Inc,2.80108,United States,Communication Services,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf
+VFV.TO,META,Meta Platforms Inc,2.40814,United States,Communication Services,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf
+VFV.TO,GOOG,Alphabet Inc,2.25366,United States,Communication Services,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf
+VFV.TO,TSLA,Tesla Inc,2.19397,United States,Consumer Discretionary,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf
+VFV.TO,BRK.B,Berkshire Hathaway Inc,1.49958,United States,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf
+
+VUN.TO,NVDA,NVIDIA Corp,7.13171,United States,Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9557/vanguard-us-total-market-index-etf
+VUN.TO,AAPL,Apple Inc,6.12160,United States,Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9557/vanguard-us-total-market-index-etf
+VUN.TO,MSFT,Microsoft Corp,5.87224,United States,Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9557/vanguard-us-total-market-index-etf
+VUN.TO,AMZN,Amazon.com Inc,3.57636,United States,Consumer Discretionary,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9557/vanguard-us-total-market-index-etf
+VUN.TO,AVGO,Broadcom Inc,2.65247,United States,Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9557/vanguard-us-total-market-index-etf
+VUN.TO,GOOGL,Alphabet Inc,2.49496,United States,Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9557/vanguard-us-total-market-index-etf
+VUN.TO,META,Meta Platforms Inc,2.14547,United States,Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9557/vanguard-us-total-market-index-etf
+VUN.TO,GOOG,Alphabet Inc,1.98508,United States,Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9557/vanguard-us-total-market-index-etf
+VUN.TO,TSLA,Tesla Inc,1.90974,United States,Consumer Discretionary,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9557/vanguard-us-total-market-index-etf
+VUN.TO,BRK.B,Berkshire Hathaway Inc,1.30516,United States,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9557/vanguard-us-total-market-index-etf
+
+VCN.TO,SHOP,Shopify Inc,7.05799,Canada,Information Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf
+VCN.TO,RY,Royal Bank of Canada,6.97955,Canada,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf
+VCN.TO,TD,Toronto Dominion Bank/The,4.74019,Canada,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf
+VCN.TO,ENB,Enbridge Inc,3.41782,Canada,Energy,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf
+VCN.TO,BN,Brookfield Corp,3.27559,Canada,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf
+VCN.TO,BMO,Bank of Montreal,3.00492,Canada,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf
+VCN.TO,BNS,Bank of Nova Scotia/The,2.75113,Canada,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf
+VCN.TO,AEM,Agnico Eagle Mines Ltd,2.69624,Canada,Basic Materials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf
+VCN.TO,CM,Canadian Imperial Bank of Commerce,2.61605,Canada,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf
+VCN.TO,CP,Canadian Pacific Kansas City Ltd,2.25961,Canada,Industrials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf
+
+VIU.TO,ASML,ASML Holding NV,1.69645,Netherlands,Information Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9569/vanguard-ftse-developed-all-cap-ex-north-america-index-etf
+VIU.TO,SSNLF,Samsung Electronics Co Ltd,1.43718,South Korea,Communication Services,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9569/vanguard-ftse-developed-all-cap-ex-north-america-index-etf
+VIU.TO,SAP,SAP SE,1.08293,Germany,Information Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9569/vanguard-ftse-developed-all-cap-ex-north-america-index-etf
+VIU.TO,AZN,AstraZeneca PLC,0.99845,United Kingdom,Health Care,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9569/vanguard-ftse-developed-all-cap-ex-north-america-index-etf
+VIU.TO,HSBC,HSBC Holdings PLC,0.98754,United Kingdom,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9569/vanguard-ftse-developed-all-cap-ex-north-america-index-etf
+VIU.TO,NSRGY,Nestle SA,0.98438,Switzerland,Consumer Staples,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9569/vanguard-ftse-developed-all-cap-ex-north-america-index-etf
+VIU.TO,NVS,Novartis AG,0.93839,Switzerland,Health Care,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9569/vanguard-ftse-developed-all-cap-ex-north-america-index-etf
+VIU.TO,RHHBY,Roche Holding AG,0.92214,Switzerland,Health Care,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9569/vanguard-ftse-developed-all-cap-ex-north-america-index-etf
+VIU.TO,SHEL,Shell PLC,0.89400,United Kingdom,Energy,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9569/vanguard-ftse-developed-all-cap-ex-north-america-index-etf
+VIU.TO,TM,Toyota Motor Corp,0.88006,Japan,Consumer Discretionary,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9569/vanguard-ftse-developed-all-cap-ex-north-america-index-etf
+
+VEE.TO,TSM,Taiwan Semiconductor Manufacturing Co Ltd,10.65168,Taiwan,Information Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9556/vanguard-ftse-emerging-markets-all-cap-index-etf
+VEE.TO,TCEHY,Tencent Holdings Ltd,4.56760,Hong Kong,Information Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9556/vanguard-ftse-emerging-markets-all-cap-index-etf
+VEE.TO,BABA,Alibaba Group Holding Ltd,3.45723,Hong Kong,Consumer Discretionary,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9556/vanguard-ftse-emerging-markets-all-cap-index-etf
+VEE.TO,HDB,HDFC Bank Ltd,1.14271,India,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9556/vanguard-ftse-emerging-markets-all-cap-index-etf
+VEE.TO,RELIANCE,Reliance Industries Ltd,1.03406,India,Energy,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9556/vanguard-ftse-emerging-markets-all-cap-index-etf
+VEE.TO,PDD,PDD Holdings Inc,0.93129,United States,Information Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9556/vanguard-ftse-emerging-markets-all-cap-index-etf
+VEE.TO,HONHAI,Hon Hai Precision Industry Co Ltd,0.91660,Taiwan,Information Technology,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9556/vanguard-ftse-emerging-markets-all-cap-index-etf
+VEE.TO,XIAOMI,Xiaomi Corp,0.86901,Hong Kong,Communication Services,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9556/vanguard-ftse-emerging-markets-all-cap-index-etf
+VEE.TO,CCB,China Construction Bank Corp,0.86689,Hong Kong,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9556/vanguard-ftse-emerging-markets-all-cap-index-etf
+VEE.TO,ICICIBANK,ICICI Bank Ltd,0.72490,India,Financials,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/equity/9556/vanguard-ftse-emerging-markets-all-cap-index-etf
+
+VEQT.TO,VUN.TO,Vanguard US Total Market Index ETF,45.68,United States,Equity,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/asset-allocation/9692/vanguard-all-equity-etf-portfolio
+VEQT.TO,VCN.TO,Vanguard FTSE Canada All Cap Index ETF,30.01,Canada,Equity,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/asset-allocation/9692/vanguard-all-equity-etf-portfolio
+VEQT.TO,VIU.TO,Vanguard FTSE Developed All Cap ex North America Index ETF,17.01,International,Equity,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/asset-allocation/9692/vanguard-all-equity-etf-portfolio
+VEQT.TO,VEE.TO,Vanguard FTSE Emerging Markets All Cap Index ETF,7.27,Emerging Markets,Equity,Equity,2025-10-31,Vanguard,https://www.vanguard.ca/en/product/etf/asset-allocation/9692/vanguard-all-equity-etf-portfolio
+
+ZSP.TO,NVDA,NVIDIA Corporation,7.58,United States,Information Technology,Equity,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-sp-500-index-etf-zsp/
+ZSP.TO,AAPL,Apple Inc,7.09,United States,Information Technology,Equity,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-sp-500-index-etf-zsp/
+ZSP.TO,MSFT,Microsoft Corporation,6.21,United States,Information Technology,Equity,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-sp-500-index-etf-zsp/
+ZSP.TO,AMZN,Amazon.com Inc,3.84,United States,Consumer Discretionary,Equity,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-sp-500-index-etf-zsp/
+ZSP.TO,AVGO,Broadcom Inc,3.21,United States,Information Technology,Equity,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-sp-500-index-etf-zsp/
+ZSP.TO,GOOGL,Alphabet Inc Class A,3.20,United States,Communication Services,Equity,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-sp-500-index-etf-zsp/
+ZSP.TO,GOOG,Alphabet Inc Class C,2.57,United States,Communication Services,Equity,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-sp-500-index-etf-zsp/
+ZSP.TO,META,Meta Platforms Inc,2.36,United States,Communication Services,Equity,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-sp-500-index-etf-zsp/
+ZSP.TO,TSLA,Tesla Inc,2.06,United States,Consumer Discretionary,Equity,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-sp-500-index-etf-zsp/
+ZSP.TO,BRK.B,Berkshire Hathaway Inc Class B,1.61,United States,Financials,Equity,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-sp-500-index-etf-zsp/
+
+ZAG.TO,CA135087T388,Canadian Government Bond 2.75 Sep 01 2030,1.68,Canada,Government Bonds,Fixed Income,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-aggregate-bond-index-etf-zag/
+ZAG.TO,CA135087S620,Canadian Government 3.25 Jun 01 2035,1.56,Canada,Government Bonds,Fixed Income,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-aggregate-bond-index-etf-zag/
+ZAG.TO,CA135087R481,Canadian Government Bond 3.00 Jun 01 2034,1.38,Canada,Government Bonds,Fixed Income,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-aggregate-bond-index-etf-zag/
+ZAG.TO,CA135087S471,Canadian Government Bond 2.75 Mar 01 2030,1.27,Canada,Government Bonds,Fixed Income,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-aggregate-bond-index-etf-zag/
+ZAG.TO,CA135087T610,Canadian Government 2.50 Nov 01 2027,1.21,Canada,Government Bonds,Fixed Income,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-aggregate-bond-index-etf-zag/
+ZAG.TO,CA135087S216,Canadian Government Bond 3.25 Dec 01 2034,1.19,Canada,Government Bonds,Fixed Income,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-aggregate-bond-index-etf-zag/
+ZAG.TO,CA135087R895,Canadian Government Bond 3.50 Sep 01 2029,1.18,Canada,Government Bonds,Fixed Income,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-aggregate-bond-index-etf-zag/
+ZAG.TO,CA135087M276,Canadian Government Bond 1.50 Jun 01 2031,1.16,Canada,Government Bonds,Fixed Income,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-aggregate-bond-index-etf-zag/
+ZAG.TO,CA135087T461,Canadian Government Bond 2.50 Aug 01 2027,1.14,Canada,Government Bonds,Fixed Income,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-aggregate-bond-index-etf-zag/
+ZAG.TO,CA135087S885,Canadian Government Bond 2.75 May 01 2027,1.10,Canada,Government Bonds,Fixed Income,2025-11-27,BMO,https://www.bmogam.com/ca-en/products/exchange-traded-fund/bmo-aggregate-bond-index-etf-zag/
+
+XIC,RY,Royal Bank of Canada,6.77,Canada,Financials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf
+XIC,SHOP,Shopify Inc,6.12,Canada,Information Technology,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf
+XIC,TD,Toronto Dominion,4.50,Canada,Financials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf
+XIC,ENB,Enbridge Inc,3.29,Canada,Energy,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf
+XIC,BN,Brookfield Corp,3.16,Canada,Financials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf
+XIC,BMO,Bank of Montreal,2.82,Canada,Financials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf
+XIC,AEM,Agnico Eagle Mines Ltd,2.74,Canada,Basic Materials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf
+XIC,BNS,Bank of Nova Scotia,2.69,Canada,Financials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf
+XIC,CM,Canadian Imperial Bank of Commerce,2.50,Canada,Financials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf
+XIC,ABX,Barrick Gold Corp,2.20,Canada,Basic Materials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf
+
+XEF,IEFA,iShares Core MSCI EAFE ETF,3.66,United States,Financials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf
+XEF,ASML,ASML Holding NV,1.69,Netherlands,Information Technology,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf
+XEF,AZN,AstraZeneca PLC,1.20,United Kingdom,Health Care,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf
+XEF,ROG,Roche Holding AG,1.13,Switzerland,Health Care,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf
+XEF,NESN,Nestle SA,1.05,Switzerland,Consumer Staples,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf
+XEF,SAP,SAP SE,1.04,Germany,Information Technology,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf
+XEF,NOVN,Novartis AG,1.03,Switzerland,Health Care,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf
+XEF,HSBA,HSBC Holdings PLC,1.00,United Kingdom,Financials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf
+XEF,SHEL,Shell PLC,0.88,United Kingdom,Energy,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf
+XEF,SIE,Siemens AG,0.83,Germany,Industrials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf
+
+XTOT,ITOT,iShares Core S&P Total US Stock Market ETF,99.92,United States,Financials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/343519/ishares-core-s-p-total-u-s-stock-market-index-etf
+XTOT,CAD,CAD Cash,0.05,Canada,Cash,Cash,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/343519/ishares-core-s-p-total-u-s-stock-market-index-etf
+XTOT,USD,USD Cash,0.03,United States,Cash,Cash,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/343519/ishares-core-s-p-total-u-s-stock-market-index-etf
+
+ITOT,NVDA,NVIDIA Corp,6.66,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239724/ishares-core-sp-total-us-stock-market-etf
+ITOT,AAPL,Apple Inc,6.24,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239724/ishares-core-sp-total-us-stock-market-etf
+ITOT,MSFT,Microsoft Corp,5.47,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239724/ishares-core-sp-total-us-stock-market-etf
+ITOT,AMZN,Amazon.com Inc,3.37,United States,Consumer Discretionary,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239724/ishares-core-sp-total-us-stock-market-etf
+ITOT,AVGO,Broadcom Inc,2.83,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239724/ishares-core-sp-total-us-stock-market-etf
+ITOT,GOOGL,Alphabet Inc Class A,2.81,United States,Communication Services,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239724/ishares-core-sp-total-us-stock-market-etf
+ITOT,GOOG,Alphabet Inc Class C,2.27,United States,Communication Services,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239724/ishares-core-sp-total-us-stock-market-etf
+ITOT,META,Meta Platforms Inc Class A,2.08,United States,Communication Services,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239724/ishares-core-sp-total-us-stock-market-etf
+ITOT,TSLA,Tesla Inc,1.81,United States,Consumer Discretionary,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239724/ishares-core-sp-total-us-stock-market-etf
+ITOT,BRK.B,Berkshire Hathaway Inc Class B,1.42,United States,Financials,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239724/ishares-core-sp-total-us-stock-market-etf
+
+XEC,TSM,Taiwan Semiconductor Manufacturing,9.79,Taiwan,Information Technology,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251423/ishares-msci-emerging-markets-imi-index-etf
+XEC,TCEHY,Tencent Holdings Ltd,4.41,Hong Kong,Communication Services,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251423/ishares-msci-emerging-markets-imi-index-etf
+XEC,BABA,Alibaba Group Holding Ltd,2.96,Hong Kong,Consumer Discretionary,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251423/ishares-msci-emerging-markets-imi-index-etf
+XEC,SSNLF,Samsung Electronics Ltd,2.87,South Korea,Information Technology,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251423/ishares-msci-emerging-markets-imi-index-etf
+XEC,SKHYNIX,SK Hynix Inc,1.69,South Korea,Information Technology,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251423/ishares-msci-emerging-markets-imi-index-etf
+XEC,HDB,HDFC Bank Ltd,1.11,India,Financials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251423/ishares-msci-emerging-markets-imi-index-etf
+XEC,RELIANCE,Reliance Industries Ltd,0.93,India,Energy,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251423/ishares-msci-emerging-markets-imi-index-etf
+XEC,CCB,China Construction Bank Corp H,0.88,China,Financials,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251423/ishares-msci-emerging-markets-imi-index-etf
+XEC,HONHAI,Hon Hai Precision Industry Ltd,0.79,Taiwan,Information Technology,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251423/ishares-msci-emerging-markets-imi-index-etf
+XEC,XIAOMI,Xiaomi Corp,0.77,Hong Kong,Information Technology,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/251423/ishares-msci-emerging-markets-imi-index-etf
+
+XAW.TO,IVV,iShares Core S&P 500 ETF,52.69,United States,Equity,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272108/ishares-core-sp-us-total-market-index-etf
+XAW.TO,XEF,iShares MSCI EAFE IMI Index ETF,22.89,International,Equity,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272108/ishares-core-sp-us-total-market-index-etf
+XAW.TO,XEC,iShares MSCI Emerging Markets IMI Index ETF,11.98,Emerging Markets,Equity,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272108/ishares-core-sp-us-total-market-index-etf
+XAW.TO,ITOT,iShares Core S&P Total US Stock Market ETF,7.36,United States,Equity,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272108/ishares-core-sp-us-total-market-index-etf
+XAW.TO,IJH,iShares Core S&P Mid Cap ETF,3.21,United States,Equity,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272108/ishares-core-sp-us-total-market-index-etf
+XAW.TO,IJR,iShares Core S&P Small Cap ETF,1.82,United States,Equity,Equity,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272108/ishares-core-sp-us-total-market-index-etf
+XAW.TO,USD,USD Cash,0.04,United States,Cash,Cash,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272108/ishares-core-sp-us-total-market-index-etf
+XAW.TO,CAD,CAD Cash,0.02,Canada,Cash,Cash,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272108/ishares-core-sp-us-total-market-index-etf
+
+IVV,NVDA,NVIDIA Corp,7.55,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf
+IVV,AAPL,Apple Inc,7.07,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf
+IVV,MSFT,Microsoft Corp,6.20,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf
+IVV,AMZN,Amazon.com Inc,3.82,United States,Consumer Discretionary,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf
+IVV,AVGO,Broadcom Inc,3.21,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf
+IVV,GOOGL,Alphabet Inc Class A,3.20,United States,Communication Services,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf
+IVV,GOOG,Alphabet Inc Class C,2.57,United States,Communication Services,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf
+IVV,META,Meta Platforms Inc Class A,2.36,United States,Communication Services,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf
+IVV,TSLA,Tesla Inc,2.05,United States,Consumer Discretionary,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf
+IVV,BRK.B,Berkshire Hathaway Inc Class B,1.61,United States,Financials,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf
+
+IJH,FIX,Comfort Systems USA Inc,1.08,United States,Industrials,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239763/ishares-core-sp-midcap-etf
+IJH,CIEN,Ciena Corp,0.89,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239763/ishares-core-sp-midcap-etf
+IJH,PSTG,Pure Storage Inc Class A,0.84,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239763/ishares-core-sp-midcap-etf
+IJH,COHR,Coherent Corp,0.76,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239763/ishares-core-sp-midcap-etf
+IJH,UTHR,United Therapeutics Corp,0.70,United States,Health Care,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239763/ishares-core-sp-midcap-etf
+IJH,FLEX,Flex Ltd,0.69,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239763/ishares-core-sp-midcap-etf
+IJH,LITE,Lumentum Holdings Inc,0.68,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239763/ishares-core-sp-midcap-etf
+IJH,CASY,Caseys General Stores Inc,0.67,United States,Consumer Staples,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239763/ishares-core-sp-midcap-etf
+IJH,CW,Curtiss Wright Corp,0.67,United States,Industrials,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239763/ishares-core-sp-midcap-etf
+IJH,ILMN,Illumina Inc,0.63,United States,Health Care,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239763/ishares-core-sp-midcap-etf
+
+IJR,SPXC,SPX Technologies Inc,0.72,United States,Industrials,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239774/ishares-core-sp-smallcap-etf
+IJR,HL,Hecla Mining,0.71,United States,Basic Materials,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239774/ishares-core-sp-smallcap-etf
+IJR,DY,Dycom Industries Inc,0.70,United States,Industrials,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239774/ishares-core-sp-smallcap-etf
+IJR,IDCC,InterDigital Inc,0.63,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239774/ishares-core-sp-smallcap-etf
+IJR,BWA,BorgWarner Inc,0.63,United States,Consumer Discretionary,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239774/ishares-core-sp-smallcap-etf
+IJR,SANM,Sanmina Corp,0.56,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239774/ishares-core-sp-smallcap-etf
+IJR,CTRE,CareTrust REIT Inc,0.56,United States,Real Estate,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239774/ishares-core-sp-smallcap-etf
+IJR,AWI,Armstrong World Industries Inc,0.56,United States,Industrials,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239774/ishares-core-sp-smallcap-etf
+IJR,ARWR,Arrowhead Pharmaceuticals Inc,0.54,United States,Health Care,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239774/ishares-core-sp-smallcap-etf
+IJR,AEIS,Advanced Energy Industries Inc,0.54,United States,Information Technology,Equity,2025-11-26,iShares,https://www.ishares.com/us/products/239774/ishares-core-sp-smallcap-etf
+
+XEQT.TO,XIC,iShares S&P TSX Capped Composite ETF,26.61,Canada,Equity,Equity,2025-10-31,iShares,https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio
+XEQT.TO,ITOT,iShares Core S&P Total US Stock Market ETF,25.88,United States,Equity,Equity,2025-10-31,iShares,https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio
+XEQT.TO,XEF,iShares MSCI EAFE IMI Index ETF,24.59,International,Equity,Equity,2025-10-31,iShares,https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio
+XEQT.TO,XTOT,iShares Core S&P Total US Composite ETF,17.73,United States,Equity,Equity,2025-10-31,iShares,https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio
+XEQT.TO,XEC,iShares MSCI Emerging Markets ETF,5.11,Emerging Markets,Equity,Equity,2025-10-31,iShares,https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio
+XEQT.TO,CAD,CAD Cash,0.07,Canada,Cash,Cash,2025-10-31,iShares,https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio
+XEQT.TO,USD,USD Cash,0.02,United States,Cash,Cash,2025-10-31,iShares,https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio
