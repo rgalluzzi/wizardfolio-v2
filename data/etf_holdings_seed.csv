@@ -288,3 +288,14 @@ XEQT.TO,XTOT,iShares Core S&P Total US Composite ETF,17.73,United States,Equity,
 XEQT.TO,XEC,iShares MSCI Emerging Markets ETF,5.11,Emerging Markets,Equity,Equity,2025-10-31,iShares,https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio
 XEQT.TO,CAD,CAD Cash,0.07,Canada,Cash,Cash,2025-10-31,iShares,https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio
 XEQT.TO,USD,USD Cash,0.02,United States,Cash,Cash,2025-10-31,iShares,https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio
+
+XUU.TO,ITOT,ISHARES CORE S&P TOTAL U.S. STOCK,47.25,,Equity,Financials,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272104/ishares-core-sp-us-total-market-index-etf
+XUU.TO,IVV,ISHARES CORE S&P ETF TRUST,46.87,,Equity,Financials,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272104/ishares-core-sp-us-total-market-index-etf
+XUU.TO,IJH,ISHARES CORE S&P MID-CAP ETF,2.45,,Equity,Financials,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272104/ishares-core-sp-us-total-market-index-etf
+XUU.TO,IJR,ISHARES CORE S&P SMALL-CAP ETF,0.95,,Equity,Health Care,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272104/ishares-core-sp-us-total-market-index-etf
+XUU.TO,CRH,CRH PUBLIC LIMITED PLC,0.13,,Equity,Materials,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272104/ishares-core-sp-us-total-market-index-etf
+XUU.TO,UBER,UBER TECHNOLOGIES INC,0.09,,Equity,Industrials,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272104/ishares-core-sp-us-total-market-index-etf
+XUU.TO,PANW,PALO ALTO NETWORKS INC,0.09,,Equity,Information Technology,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272104/ishares-core-sp-us-total-market-index-etf
+XUU.TO,CRWD,CROWDSTRIKE HOLDINGS INC CLASS A,0.09,,Equity,Information Technology,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272104/ishares-core-sp-us-total-market-index-etf
+XUU.TO,AVGO,BROADCOM INC,0.08,,Equity,Information Technology,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272104/ishares-core-sp-us-total-market-index-etf
+XUU.TO,FERG,FERGUSON ENTERPRISES INC,0.08,,Equity,Industrials,2025-11-26,iShares,https://www.blackrock.com/ca/investors/en/products/272104/ishares-core-sp-us-total-market-index-etf

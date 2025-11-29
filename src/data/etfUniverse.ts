@@ -2,13 +2,14 @@ export const ETF_UNIVERSE: string[] = [
   // -----------------------------
   // 🇺🇸 U.S. ETFs (Core Market)
   // -----------------------------
-  "VOO",     // Vanguard S&P 500
-  "SPY",     // State Street SPDR S&P 500
-  "QQQ",     // Invesco Nasdaq-100
-  "VTI",     // Vanguard Total U.S. Market
-  "VT",      // Vanguard Total World
-  "VXUS",    // Vanguard Total Intl ex-US
-  "BND",     // Vanguard Total Bond Market
+  "VOO",      // Vanguard S&P 500
+  "SPY",      // SPDR S&P 500
+  "QQQ",      // Nasdaq-100
+  "VTI",      // Total U.S. Market
+  "VT",       // Total World
+  "VXUS",     // Intl ex-US
+  "BND",      // Total U.S. Bond
+  "SCHD",     // Dividend (U.S.)
 
   // -----------------------------
   // 🇨🇦 Vanguard Canada
@@ -17,23 +18,30 @@ export const ETF_UNIVERSE: string[] = [
   "VGRO.TO",  // Growth
   "VBAL.TO",  // Balanced
   "VCNS.TO",  // Conservative
-
   "VFV.TO",   // S&P 500 CAD
   "VDY.TO",   // Canadian Dividend
+  "VUN.TO",   // U.S. total market
+  "VEE.TO",   // Emerging Markets
+  "VIU.TO",   // International Developed
+  "VCN.TO",   // Canadian Equity
 
   // -----------------------------
   // 🇨🇦 iShares Canada
   // -----------------------------
-  "XIU.TO",   // TSX 60
-  "XAW.TO",   // All-world ex-Canada
-  "XEQT.TO",  // All-equity
+  "XAW.TO",   // All-World ex Canada
+  "XUU.TO",   // U.S. Total Market
+  "XEF.TO",   // Developed Markets
+  "XEC.TO",   // Emerging Markets
+  "XEQT.TO",  // All-Equity
   "XGRO.TO",  // Growth
+  "XIU.TO",   // TSX 60
+  "XIC.TO",   // Full TSX composite
 
   // -----------------------------
   // 🇨🇦 BMO ETFs
   // -----------------------------
   "ZSP.TO",   // S&P 500 CAD
-  "ZAG.TO",   // Aggregate Bond
+  "ZAG.TO",   // Canadian Aggregate Bond
 
   // -----------------------------
   // 🇨🇦 Horizons (swap ETFs)
@@ -41,7 +49,9 @@ export const ETF_UNIVERSE: string[] = [
   "HXT.TO",   // Total Return S&P 500
 
   // -----------------------------
-  // 🇺🇸 Schwab
+  // Extra supported ETFs already in DB
   // -----------------------------
-  "SCHD",     // Dividend ETF
+  "VTI",      // (already included)
+  "VOO",      // (already included)
+  "VXUS",     // (already included)
 ];
