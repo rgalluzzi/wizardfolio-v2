@@ -47,6 +47,7 @@ export async function POST(req: NextRequest) {
     }
 
     const payload = (await req.json()) as Partial<EtfExposureRequest>;
+
     if (!payload || !Array.isArray(payload.etfs) || !Array.isArray(payload.weights)) {
       return NextResponse.json(
         { error: "Payload must include etfs and weights arrays" },
@@ -82,21 +83,42 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const etfs = payload.etfs.map((symbol) =>
+    // 1) Normalize / trim symbols
+    const rawEtfs = payload.etfs.map((symbol) =>
       typeof symbol === "string" ? symbol.trim() : "",
     );
 
-    if (etfs.some((symbol) => symbol.length === 0)) {
+    // 2) Pair with weights and DROP invalid entries
+    const cleanedPairs = rawEtfs
+      .map((symbol, index) => ({
+        symbol,
+        weight: payload.weights![index],
+      }))
+      .filter(
+        (item) =>
+          item.symbol.length > 0 &&
+          typeof item.weight === "number" &&
+          Number.isFinite(item.weight) &&
+          item.weight > 0,
+      );
+
+    if (!cleanedPairs.length) {
       return NextResponse.json(
-        { error: "ETF symbols must be non-empty strings" },
+        {
+          error:
+            "At least one ETF with a non-empty symbol and positive weight is required",
+        },
         { status: 400, headers: CACHE_HEADERS },
       );
     }
 
-    // FIXED: remove generic on rpc and cast the result explicitly
+    const etfs = cleanedPairs.map((item) => item.symbol);
+    const weights = cleanedPairs.map((item) => item.weight);
+
+    // Call Supabase RPC with cleaned arrays
     const { data, error } = await supabase.rpc("calculate_exposure", {
       etfs,
-      weights: payload.weights,
+      weights,
     });
 
     if (error) {
@@ -111,7 +133,10 @@ export async function POST(req: NextRequest) {
       exposure: (data ?? []) as ExposureRow[],
     };
 
-    return NextResponse.json(response, { status: 200, headers: CACHE_HEADERS });
+    return NextResponse.json(response, {
+      status: 200,
+      headers: CACHE_HEADERS,
+    });
   } catch (error) {
     console.error("ETF exposure handler failed", error);
     return NextResponse.json(

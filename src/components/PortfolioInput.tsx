@@ -210,7 +210,7 @@ export default function PortfolioInput({
             disabled={!canAnalyze}
             className="inline-flex items-center rounded-full bg-zinc-900 px-4 py-1.5 text-xs font-semibold text-white disabled:opacity-40 dark:bg-zinc-100 dark:text-zinc-900"
           >
-            Analyze portfolio
+            See Breakdown
           </button>
         </div>
       </div>
