@@ -7,6 +7,7 @@ import RegionExposureChart from "@/components/RegionExposureChart";
 import { DEFAULT_POSITIONS } from "@/data/defaultPositions";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AppleShareIcon } from "@/components/icons/AppleShareIcon";
+import { usePostHogSafe } from "@/lib/usePostHogSafe";
 
 // Local copy of the position type (no more exposureEngine)
 type UserPosition = {
@@ -50,6 +51,8 @@ export default function ResultsPage() {
     }
   }, [positionsParam]);
 
+  const { capture } = usePostHogSafe();
+
   const [exposure, setExposure] = useState<ApiExposureRow[]>([]);
   const [slide, setSlide] = useState<0 | 1 | 2 | 3>(0); // 0 = exposure, 1 = region, 2 = holdings, 3 = survey
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
@@ -75,6 +78,23 @@ export default function ResultsPage() {
   );
 
   useEffect(() => {
+    const slideName =
+      slide === 0
+        ? "Exposure"
+        : slide === 1
+        ? "Region"
+        : slide === 2
+        ? "Holdings"
+        : "Feedback";
+
+    capture("results_slide_viewed", {
+      slide_index: slide,
+      slide_name: slideName,
+      has_exposure: exposure.length > 0,
+    });
+  }, [slide, exposure.length, capture]);
+
+  useEffect(() => {
     const fetchExposure = async () => {
       setIsLoading(true);
       setError(null);
@@ -97,14 +117,29 @@ export default function ResultsPage() {
           throw new Error(body?.error || "Failed to analyze portfolio.");
         }
 
-        setExposure(body?.exposure ?? []);
+        const holdings = body?.exposure ?? [];
+
+        setExposure(holdings);
+        capture("results_viewed", {
+          num_holdings: holdings.length,
+          num_etfs: positions.length,
+          top_symbols: positions
+            .map((p) => p.symbol)
+            .slice(0, 5),
+        });
       } catch (err: any) {
         console.error("Exposure API error:", err);
         setExposure([]);
-        setError(
+        const message =
           err?.message ||
-            "Something went wrong while analyzing your mix."
-        );
+          "Something went wrong while analyzing your mix.";
+
+        setError(message);
+
+        capture("exposure_error", {
+          error_message: String(message).slice(0, 200),
+          num_etfs: positions.length,
+        });
       } finally {
         setIsLoading(false);
         setSlide(0);
@@ -112,7 +147,7 @@ export default function ResultsPage() {
     };
 
     fetchExposure();
-  }, [positions]);
+  }, [positions, capture]);
 
   // Go back to home with same positions encoded in the URL
   const handleEditInputs = () => {
@@ -135,6 +170,10 @@ export default function ResultsPage() {
     if (navigator.share) {
       try {
         await navigator.share(shareData);
+        capture("results_shared", {
+          method: "web_share",
+          has_exposure: exposure.length > 0,
+        });
         return;
       } catch (err) {
         console.warn(
@@ -146,6 +185,10 @@ export default function ResultsPage() {
 
     try {
       await navigator.clipboard.writeText(shareUrl);
+      capture("results_shared", {
+        method: "clipboard",
+        has_exposure: exposure.length > 0,
+      });
     } catch (err) {
       console.error("Failed to copy link:", err);
     }
@@ -224,10 +267,18 @@ export default function ResultsPage() {
       }
 
       setFeedbackState("success");
+      capture("feedback_submitted", {
+        selected_features: selectedFeatures,
+        has_message: Boolean(message.trim()),
+        has_email: Boolean(email.trim()),
+      });
     } catch (err) {
       console.error(err);
       setFeedbackState("error");
       setFeedbackError("Something went wrong. Please try again.");
+      capture("feedback_submit_error", {
+        selected_features_count: selectedFeatures.length,
+      });
     }
   };
 
