@@ -1,17 +1,38 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import {
-  computeExposure,
-  ExposureBreakdown,
-  UserPosition,
-} from "@/lib/exposureEngine";
 import ExposureSummary from "@/components/ExposureSummary";
 import HoldingsTable from "@/components/HoldingsTable";
 import RegionExposureChart from "@/components/RegionExposureChart";
 import { DEFAULT_POSITIONS } from "@/data/defaultPositions";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Share2 } from "lucide-react";
+import { AppleShareIcon } from "@/components/icons/AppleShareIcon";
+
+// Local copy of the position type (no more exposureEngine)
+type UserPosition = {
+  symbol: string;
+  weightPct: number;
+};
+
+type ApiExposureRow = {
+  holding_symbol: string;
+  holding_name: string;
+  country?: string | null;
+  sector?: string | null;
+  asset_class?: string | null;
+  total_weight_pct: number;
+};
+
+type SubmissionState = "idle" | "loading" | "success" | "error";
+
+const FEATURE_OPTIONS = [
+  "More ETF coverage",
+  "Support individual stocks",
+  "Connect my real portfolio",
+  "More ETF insights & charts",
+  "Multi-currency insights (CAD vs USD)",
+  "Something else…",
+];
 
 export default function ResultsPage() {
   const router = useRouter();
@@ -19,31 +40,78 @@ export default function ResultsPage() {
   const positionsParam = searchParams.get("positions");
 
   const positions = useMemo<UserPosition[]>(() => {
-    if (!positionsParam) return DEFAULT_POSITIONS;
+    if (!positionsParam) return DEFAULT_POSITIONS as UserPosition[];
     try {
       return JSON.parse(
         decodeURIComponent(positionsParam)
       ) as UserPosition[];
     } catch {
-      return DEFAULT_POSITIONS;
+      return DEFAULT_POSITIONS as UserPosition[];
     }
   }, [positionsParam]);
 
-  const [exposure, setExposure] = useState<ExposureBreakdown[]>([]);
-  const [slide, setSlide] = useState<0 | 1 | 2 | 3>(0); // 0 = exposure, 1 = region, 2 = holdings, 3 = perks
+  const [exposure, setExposure] = useState<ApiExposureRow[]>([]);
+  const [slide, setSlide] = useState<0 | 1 | 2 | 3>(0); // 0 = exposure, 1 = region, 2 = holdings, 3 = survey
   const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Survey state
+  const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
+  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
+  const [feedbackState, setFeedbackState] = useState<SubmissionState>("idle");
+  const [feedbackError, setFeedbackError] = useState<string | null>(null);
 
   const top10 = useMemo(
     () =>
       [...exposure]
-        .sort((a, b) => (b.weightPct ?? 0) - (a.weightPct ?? 0))
+        .sort(
+          (a, b) =>
+            (b.total_weight_pct ?? 0) - (a.total_weight_pct ?? 0)
+        )
         .slice(0, 10),
     [exposure]
   );
 
   useEffect(() => {
-    setExposure(computeExposure(positions));
-    setSlide(0);
+    const fetchExposure = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      try {
+        const etfs = positions.map((p) => p.symbol);
+        const weights = positions.map((p) => p.weightPct);
+
+        const res = await fetch("/api/etf-exposure", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ etfs, weights }),
+        });
+
+        const body = (await res.json().catch(() => null)) as
+          | { exposure?: ApiExposureRow[]; error?: string }
+          | null;
+
+        if (!res.ok) {
+          throw new Error(body?.error || "Failed to analyze portfolio.");
+        }
+
+        setExposure(body?.exposure ?? []);
+      } catch (err: any) {
+        console.error("Exposure API error:", err);
+        setExposure([]);
+        setError(
+          err?.message ||
+            "Something went wrong while analyzing your mix."
+        );
+      } finally {
+        setIsLoading(false);
+        setSlide(0);
+      }
+    };
+
+    fetchExposure();
   }, [positions]);
 
   // Go back to home with same positions encoded in the URL
@@ -69,13 +137,15 @@ export default function ResultsPage() {
         await navigator.share(shareData);
         return;
       } catch (err) {
-        console.warn("navigator.share failed, falling back to clipboard:", err);
+        console.warn(
+          "navigator.share failed, falling back to clipboard:",
+          err
+        );
       }
     }
 
     try {
       await navigator.clipboard.writeText(shareUrl);
-      alert("Link copied to clipboard!");
     } catch (err) {
       console.error("Failed to copy link:", err);
     }
@@ -111,16 +181,55 @@ export default function ResultsPage() {
       case 2:
         return "Top holdings";
       case 3:
-        return "Optional Perks";
+        return "Help shape WizardFolio";
       default:
         return "Your true exposure";
     }
   })();
 
-  const simpliiReferralUrl =
-    process.env.NEXT_PUBLIC_SIMPLII_REFERRAL_URL ?? "";
-  const questradeReferralUrl =
-    process.env.NEXT_PUBLIC_QUESTRADE_REFERRAL_URL ?? "";
+  const toggleFeature = (feature: string) => {
+    setSelectedFeatures((prev) =>
+      prev.includes(feature)
+        ? prev.filter((f) => f !== feature)
+        : [...prev, feature]
+    );
+  };
+
+  const hasSomethingElse = selectedFeatures.includes("Something else…");
+  const isSubmittingFeedback = feedbackState === "loading";
+
+  const handleFeedbackSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFeedbackError(null);
+
+    if (!selectedFeatures.length) {
+      setFeedbackError("Pick at least one option.");
+      return;
+    }
+
+    setFeedbackState("loading");
+    try {
+      const res = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          selectedFeatures,
+          message: message.trim() || undefined,
+          email: email.trim() || undefined,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Request failed");
+      }
+
+      setFeedbackState("success");
+    } catch (err) {
+      console.error(err);
+      setFeedbackState("error");
+      setFeedbackError("Something went wrong. Please try again.");
+    }
+  };
 
   return (
     <div className="space-y-4">
@@ -131,11 +240,11 @@ export default function ResultsPage() {
           onClick={handleShare}
           className="absolute right-3 top-3 z-30 flex h-9 w-9 items-center justify-center rounded-full bg-white/80 backdrop-blur border border-white/50 shadow-sm hover:bg-white dark:bg-zinc-800/70 dark:hover:bg-zinc-800"
         >
-          <Share2 className="h-4 w-4 text-zinc-700 dark:text-zinc-200" />
+          <AppleShareIcon className="h-4 w-4 text-zinc-700 dark:text-zinc-200" />
         </button>
 
         <div className="flex flex-col gap-4 rounded-3xl bg-white/95 p-5 dark:bg-zinc-900/80">
-          {/* Header inside card (title + Change ETFs) */}
+          {/* Header inside card (title) */}
           <div className="flex items-start justify-between gap-2">
             <div className="flex flex-col gap-1">
               <h2 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">
@@ -153,105 +262,175 @@ export default function ResultsPage() {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            {slide === 0 && (
-              <ExposureSummary exposure={exposure} showHeader={false} />
-            )}
-
-            {slide === 1 && (
-              <RegionExposureChart exposure={exposure} embedded />
-            )}
-
-            {slide === 2 && (
-              <HoldingsTable exposure={top10} showHeader={false} />
-            )}
-
-            {slide === 3 && (
-              <div className="space-y-3 text-xs sm:text-sm">
-                <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
-                  Completely optional — but if you’re already planning to open
-                  or move an account, these links can give both of us a small
-                  bonus.
-                </p>
-
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {/* Simplii perk */}
-                  <div className="flex flex-col justify-between rounded-2xl border border-amber-100 bg-white/90 p-3 text-xs shadow-sm dark:border-amber-900/40 dark:bg-zinc-900">
-                    <div className="space-y-1">
-                      <p className="text-[11px] font-semibold text-amber-800 dark:text-amber-300">
-                        Simplii Financial™
-                      </p>
-                      <p className="text-[11px] text-zinc-700 dark:text-zinc-300">
-                        New to Simplii? Open an eligible no-fee account with my
-                        link and, once you meet the deposit or spend
-                        requirement, we both earn a cash reward.
-                      </p>
-                      <p className="text-[10px] text-zinc-400 dark:text-zinc-500">
-                        For new clients only. Canadian residents (no Quebec).
-                        Funding/spend rules apply; see Simplii&apos;s full
-                        Refer-a-Friend terms.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      disabled={!simpliiReferralUrl}
-                      onClick={() =>
-                        simpliiReferralUrl &&
-                        window.open(
-                          simpliiReferralUrl,
-                          "_blank",
-                          "noopener,noreferrer"
-                        )
-                      }
-                      className="mt-2 inline-flex items-center rounded-full bg-zinc-900 px-3 py-1 text-[11px] font-semibold text-white shadow-sm hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
-                    >
-                      Use Simplii invite
-                    </button>
-                  </div>
-
-                  {/* Questrade perk */}
-                  <div className="flex flex-col justify-between rounded-2xl border border-emerald-100 bg-white/90 p-3 text-xs shadow-sm dark:border-emerald-900/40 dark:bg-zinc-900">
-                    <div className="space-y-1">
-                      <p className="text-[11px] font-semibold text-emerald-800 dark:text-emerald-300">
-                        Questrade
-                      </p>
-                      <p className="text-[11px] text-zinc-700 dark:text-zinc-300">
-                        Opening a Questrade self-directed or Questwealth
-                        account? Using my link and funding with at least $250
-                        unlocks a referral cash reward for both of us.
-                      </p>
-                      <p className="text-[10px] text-zinc-400 dark:text-zinc-500">
-                        For new Questrade clients only. Minimum funding, timing
-                        and account eligibility rules apply. Referral rewards
-                        count as contributions in registered accounts.
-                      </p>
-                    </div>
-                    <button
-                      type="button"
-                      disabled={!questradeReferralUrl}
-                      onClick={() =>
-                        questradeReferralUrl &&
-                        window.open(
-                          questradeReferralUrl,
-                          "_blank",
-                          "noopener,noreferrer"
-                        )
-                      }
-                      className="mt-2 inline-flex items-center rounded-full bg-zinc-900 px-3 py-1 text-[11px] font-semibold text-white shadow-sm hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-40 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
-                    >
-                      Use Questrade invite
-                    </button>
-                  </div>
-                </div>
-
-                <p className="text-[10px] text-zinc-400 dark:text-zinc-600">
-                  WizardFolio doesn’t run these promotions — they come directly
-                  from each institution. Always check their latest terms.
-                </p>
+            {isLoading && (
+              <div className="flex h-full items-center justify-center text-xs text-zinc-500 dark:text-zinc-400">
+                Crunching your ETF mix…
               </div>
+            )}
+
+            {!isLoading && error && (
+              <div className="flex h-full flex-col items-center justify-center gap-2 text-center text-xs text-rose-500 dark:text-rose-400">
+                <p>{error}</p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    // simple manual retry: just re-run effect by tweaking positions reference
+                    router.refresh();
+                  }}
+                  className="rounded-full bg-zinc-900 px-3 py-1 text-[11px] font-semibold text-white dark:bg-zinc-100 dark:text-zinc-900"
+                >
+                  Try again
+                </button>
+              </div>
+            )}
+
+            {!isLoading && !error && (
+              <>
+                {slide === 0 && (
+                  <ExposureSummary exposure={exposure} showHeader={false} />
+                )}
+
+                {slide === 1 && (
+                  <RegionExposureChart exposure={exposure} />
+                )}
+
+                {slide === 2 && (
+                  <HoldingsTable exposure={top10} showHeader={false} />
+                )}
+
+                {slide === 3 && (
+                  <>
+                    {feedbackState === "success" ? (
+                      <div className="flex h-full flex-col justify-center rounded-2xl border border-zinc-200 bg-white/80 p-4 text-left text-xs shadow-sm dark:border-zinc-800 dark:bg-zinc-900/70 sm:text-sm">
+                        <p className="text-[11px] font-medium uppercase tracking-wide text-emerald-500">
+                          Thank you ✨
+                        </p>
+                        <h3 className="mt-1 text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+                          You’re officially helping design WizardFolio.
+                        </h3>
+                        <p className="mt-2 text-xs text-zinc-500 dark:text-zinc-400">
+                          We’ll use this to decide what to build next. If
+                          you left an email, we’ll let you know as new
+                          features go live.
+                        </p>
+                      </div>
+                    ) : (
+                      <form
+                        onSubmit={handleFeedbackSubmit}
+                        className="flex h-full flex-col rounded-2xl border border-zinc-200 bg-white/80 p-4 text-left text-xs shadow-sm dark:border-zinc-800 dark:bg-zinc-900/70 sm:text-sm"
+                      >
+                        <p className="text-[11px] font-medium uppercase tracking-wide text-indigo-500">
+                          Help shape WizardFolio
+                        </p>
+                        <h3 className="mt-1 text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+                          What would you love to see next?
+                        </h3>
+                        <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
+                          Tap a few wishes below. Optional: add your email
+                          and we’ll let you know when new features land.
+                        </p>
+
+                        {/* Feature chips */}
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {FEATURE_OPTIONS.map((feature) => {
+                            const selected =
+                              selectedFeatures.includes(feature);
+                            return (
+                              <button
+                                key={feature}
+                                type="button"
+                                onClick={() => toggleFeature(feature)}
+                                className={[
+                                  "rounded-full border px-3 py-1 text-[11px] transition",
+                                  selected
+                                    ? "border-indigo-500 bg-indigo-500 text-white shadow-sm"
+                                    : "border-zinc-200 bg-white/60 text-zinc-700 hover:border-zinc-300 dark:border-zinc-700 dark:bg-zinc-900/70 dark:text-zinc-200",
+                                ].join(" ")}
+                              >
+                                {feature}
+                              </button>
+                            );
+                          })}
+                        </div>
+
+                        {/* Something else textarea */}
+                        {hasSomethingElse && (
+                          <div className="mt-3">
+                            <label className="mb-1 block text-[11px] font-medium text-zinc-700 dark:text-zinc-200">
+                              Something else you wish WizardFolio could do?
+                            </label>
+                            <textarea
+                              value={message}
+                              onChange={(e) =>
+                                setMessage(e.target.value)
+                              }
+                              rows={3}
+                              className="w-full rounded-xl border border-zinc-200 bg-white/80 p-2 text-xs text-zinc-900 outline-none ring-0 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-100"
+                              placeholder="e.g., See all my accounts in one place, more credit card insights, etc."
+                            />
+                          </div>
+                        )}
+
+                        {/* Email input */}
+                        <div className="mt-3">
+                          <label className="mb-1 block text-[11px] font-medium text-zinc-700 dark:text-zinc-200">
+                            Email (optional)
+                          </label>
+                          <input
+                            type="email"
+                            inputMode="email"
+                            autoComplete="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            className="w-full rounded-xl border border-zinc-200 bg-white/80 px-3 py-2 text-xs text-zinc-900 outline-none ring-0 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-100"
+                            placeholder="you@example.com"
+                          />
+                          <p className="mt-1 text-[10px] text-zinc-500 dark:text-zinc-400">
+                            Optional. We’ll only email you about WizardFolio
+                            updates.
+                          </p>
+                        </div>
+
+                        {feedbackError && (
+                          <p className="mt-2 text-[11px] text-rose-500">
+                            {feedbackError}
+                          </p>
+                        )}
+                        {feedbackState === "error" && !feedbackError && (
+                          <p className="mt-2 text-[11px] text-rose-500">
+                            Something went wrong. Please try again.
+                          </p>
+                        )}
+
+                        <div className="mt-4 flex items-center gap-2">
+                          <button
+                            type="submit"
+                            disabled={
+                              isSubmittingFeedback ||
+                              !selectedFeatures.length
+                            }
+                            className={[
+                              "inline-flex flex-1 items-center justify-center rounded-full px-3 py-2 text-xs font-semibold transition",
+                              isSubmittingFeedback ||
+                              !selectedFeatures.length
+                                ? "bg-zinc-300 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
+                                : "bg-indigo-600 text-white shadow-sm hover:bg-indigo-500",
+                            ].join(" ")}
+                          >
+                            {isSubmittingFeedback
+                              ? "Sending..."
+                              : "Send my wishlist"}
+                          </button>
+                        </div>
+                      </form>
+                    )}
+                  </>
+                )}
+              </>
             )}
           </div>
 
-          {/* Gallery dots: exposure • region • holdings • perks */}
+          {/* Gallery dots: exposure • region • holdings • feedback */}
           <div className="flex justify-center gap-2 pt-1">
             {[0, 1, 2, 3].map((idx) => (
               <button
@@ -266,7 +445,7 @@ export default function ResultsPage() {
                     ? "Region"
                     : idx === 2
                     ? "Holdings"
-                    : "Optional perks"
+                    : "Feedback"
                 }
               >
                 <span

@@ -1,91 +1,54 @@
 "use client";
 
 import * as React from "react";
-import { ExposureBreakdown } from "@/lib/exposureEngine";
+
+export type ApiExposureRow = {
+  holding_symbol: string;
+  holding_name: string;
+  country?: string | null;
+  sector?: string | null;
+  asset_class?: string | null;
+  total_weight_pct: number;
+};
 
 type RegionExposureChartProps = {
-  exposure?: ExposureBreakdown[];
+  exposure?: ApiExposureRow[];
 };
 
 // Simple color palette (matches your vibe)
 const REGION_COLORS: Record<string, string> = {
-  US: "#38BDF8",          // sky blue
-  Canada: "#4ADE80",      // green
+  US: "#38BDF8", // sky blue
+  Canada: "#4ADE80", // green
   International: "#A855F7", // violet
 };
 
-type EtfProfile = {
-  usShare: number;
-  caShare: number;
-  intlShare: number;
-  isBond: boolean;
-};
+type RegionKey = "US" | "Canada" | "International";
 
-function getSymbolProfile(symbolRaw: string | undefined): EtfProfile {
-  // Default: global-ish equity
-  const base: EtfProfile = {
-    usShare: 0.4,
-    caShare: 0.1,
-    intlShare: 0.5,
-    isBond: false,
-  };
+function normalizeCountryToRegion(countryRaw: string | null | undefined): RegionKey {
+  if (!countryRaw) return "International";
 
-  if (!symbolRaw) return base;
+  const c = countryRaw.trim().toLowerCase();
 
-  const symbol = symbolRaw.trim().toUpperCase();
-  const plain = symbol.replace(".TO", "");
-  const isAny = (...codes: string[]) => codes.includes(plain);
-
-  // Bonds / fixed income (no region contribution for now)
-  if (isAny("BND", "ZAG", "XBB", "VAB")) {
-    return { usShare: 0, caShare: 0, intlShare: 0, isBond: true };
+  if (
+    c === "us" ||
+    c === "usa" ||
+    c === "united states" ||
+    c === "united states of america"
+  ) {
+    return "US";
   }
 
-  // S&P 500 / U.S. large cap
-  if (isAny("SPY", "VOO", "IVV", "ZSP", "HXS", "VFV", "VFV.TO")) {
-    return { usShare: 1, caShare: 0, intlShare: 0, isBond: false };
+  if (c === "ca" || c === "can" || c === "canada") {
+    return "Canada";
   }
 
-  // Nasdaq-heavy, still U.S.-centric
-  if (isAny("QQQ", "QQQM", "ZQQ", "HXQ")) {
-    return { usShare: 1, caShare: 0, intlShare: 0, isBond: false };
-  }
+  return "International";
+}
 
-  // All-equity global one-ticket (VEQT/XEQT etc.)
-  if (isAny("VEQT", "XEQT", "VEQT.TO", "XEQT.TO")) {
-    return { usShare: 0.4, caShare: 0.25, intlShare: 0.35, isBond: false };
-  }
-
-  // Balanced/global growth (VGRO/VBAL etc.)
-  if (isAny("VGRO", "VBAL", "VGRO.TO", "VBAL.TO", "XGRO", "XBAL")) {
-    return { usShare: 0.35, caShare: 0.25, intlShare: 0.4, isBond: false };
-  }
-
-  // Canada equity
-  if (isAny("XIU", "ZCN", "VCN", "XIC")) {
-    return { usShare: 0, caShare: 1, intlShare: 0, isBond: false };
-  }
-
-  // International developed
-  if (isAny("XEF", "ZEA", "VIU")) {
-    return { usShare: 0, caShare: 0, intlShare: 1, isBond: false };
-  }
-
-  // Emerging markets
-  if (isAny("XEC", "ZEM", "VEE")) {
-    return { usShare: 0, caShare: 0, intlShare: 1, isBond: false };
-  }
-
-  // Dividend / value-ish
-  if (isAny("SCHD", "VDY", "ZDY")) {
-    if (plain === "VDY") {
-      return { usShare: 0, caShare: 1, intlShare: 0, isBond: false };
-    }
-    return { usShare: 1, caShare: 0, intlShare: 0, isBond: false };
-  }
-
-  // Fallback global equity
-  return base;
+function isBond(assetClassRaw: string | null | undefined): boolean {
+  if (!assetClassRaw) return false;
+  const a = assetClassRaw.toLowerCase();
+  return a.includes("bond") || a.includes("fixed income");
 }
 
 export default function RegionExposureChart({
@@ -96,36 +59,37 @@ export default function RegionExposureChart({
     [exposure]
   );
 
-  const { usPct, caPct, intlPct, totalEquity } = React.useMemo(() => {
+  const { usPct, caPct, intlPct } = React.useMemo(() => {
     let us = 0;
     let ca = 0;
     let intl = 0;
 
-    for (const pos of safeExposure) {
-      const weight = pos.weightPct ?? 0;
+    for (const row of safeExposure) {
+      const weight = row.total_weight_pct ?? 0;
       if (weight <= 0) continue;
 
-      const profile = getSymbolProfile(pos.symbol);
-      if (profile.isBond) continue; // ignore bonds for region for now
+      // If you want equity-only region, skip bonds:
+      if (isBond(row.asset_class)) continue;
 
-      us += weight * profile.usShare;
-      ca += weight * profile.caShare;
-      intl += weight * profile.intlShare;
+      const region = normalizeCountryToRegion(row.country);
+      if (region === "US") us += weight;
+      else if (region === "Canada") ca += weight;
+      else intl += weight;
     }
 
     const sum = us + ca + intl || 1;
+
     return {
       usPct: (us / sum) * 100,
       caPct: (ca / sum) * 100,
       intlPct: (intl / sum) * 100,
-      totalEquity: sum, // raw sum, not too important for UI
     };
   }, [safeExposure]);
 
   const regions = [
-    { label: "U.S.", value: usPct, key: "US" },
-    { label: "Canada", value: caPct, key: "Canada" },
-    { label: "International", value: intlPct, key: "International" },
+    { label: "U.S.", value: usPct, key: "US" as const },
+    { label: "Canada", value: caPct, key: "Canada" as const },
+    { label: "International", value: intlPct, key: "International" as const },
   ].filter((r) => r.value > 0.1); // hide truly zero slices
 
   const hasData = regions.some((r) => r.value > 0.5);
@@ -137,8 +101,8 @@ export default function RegionExposureChart({
           Where in the world you’re invested
         </h3>
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
-          Rough split between U.S., Canada, and the rest of the world based on
-          your ETF mix.
+          Split between U.S., Canada, and the rest of the world based on your
+          underlying holdings.
         </p>
       </div>
 
@@ -161,10 +125,7 @@ export default function RegionExposureChart({
           {/* Legend with percentages */}
           <ul className="space-y-1.5 text-xs sm:text-sm">
             {regions.map((r) => (
-              <li
-                key={r.key}
-                className="flex items-center justify-between"
-              >
+              <li key={r.key} className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span
                     className="h-2.5 w-2.5 rounded-full"
@@ -182,13 +143,13 @@ export default function RegionExposureChart({
           </ul>
 
           <p className="mt-2 text-[11px] text-zinc-400 dark:text-zinc-500">
-            This is an approximation. For a full regional breakdown, connect
-            your accounts in WizardFolio.
+            Based on the countries tagged in the ETF holdings data. For more
+            detail, connect your real accounts in WizardFolio.
           </p>
         </>
       ) : (
         <p className="text-xs text-zinc-500 dark:text-zinc-400">
-          Add some equity ETFs above to see your regional split.
+          Add some ETFs above to see your regional split.
         </p>
       )}
     </section>

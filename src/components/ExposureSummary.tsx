@@ -1,10 +1,23 @@
 "use client";
 
 import * as React from "react";
-import { ExposureBreakdown } from "@/lib/exposureEngine";
+
+export type ApiExposureRow = {
+  holding_symbol: string;
+  holding_name: string;
+  country?: string | null;
+  sector?: string | null;
+  asset_class?: string | null;
+  total_weight_pct: number;
+};
+
+type NormalizedExposure = {
+  symbol: string;
+  weightPct: number;
+};
 
 type ExposureSummaryProps = {
-  exposure: ExposureBreakdown[];
+  exposure: ApiExposureRow[]; // <-- matches API shape
   showHeader?: boolean;
 };
 
@@ -26,173 +39,102 @@ type Slice = {
   color: string;
 };
 
-type EtfProfile = {
-  techScore: number; // 0–1 how tech-heavy
-  usShare: number;   // 0–1
-  caShare: number;   // 0–1
-  intlShare: number; // 0–1
-  isBond: boolean;
-};
-
+// always an integer: 90.4 → 90, 90.5 → 91
 const fmtPercent = (value: number | null | undefined) =>
-  (value ?? 0).toFixed(1).replace(/\.0$/, "");
+  String(Math.round(value ?? 0));
 
-function getSymbolProfile(symbolRaw: string | undefined): EtfProfile {
-  const base: EtfProfile = {
-    techScore: 0.2,
-    usShare: 0.4,
-    caShare: 0.1,
-    intlShare: 0.5,
-    isBond: false,
-  };
+type RegionKey = "US" | "Canada" | "International";
 
-  if (!symbolRaw) return base;
+function normalizeCountryToRegion(countryRaw: string | null | undefined): RegionKey {
+  if (!countryRaw) return "International";
 
-  const symbol = symbolRaw.trim().toUpperCase();
-  const plain = symbol.replace(".TO", "");
-  const isAny = (...codes: string[]) => codes.includes(plain);
+  const c = countryRaw.trim().toLowerCase();
 
-  // Bonds / fixed income
-  if (isAny("BND", "ZAG", "XBB", "VAB")) {
-    return { techScore: 0, usShare: 0, caShare: 0, intlShare: 0, isBond: true };
+  if (
+    c === "us" ||
+    c === "usa" ||
+    c === "united states" ||
+    c === "united states of america"
+  ) {
+    return "US";
   }
 
-  // U.S. large cap broad (S&P 500, etc.)
-  if (isAny("SPY", "VOO", "IVV", "ZSP", "HXS", "VFV", "VFV.TO")) {
-    return {
-      techScore: 0.4,
-      usShare: 0.9,
-      caShare: 0.0,
-      intlShare: 0.1,
-      isBond: false,
-    };
+  if (c === "ca" || c === "can" || c === "canada") {
+    return "Canada";
   }
 
-  // Nasdaq / heavy tech
-  if (isAny("QQQ", "QQQM", "ZQQ", "HXQ")) {
-    return {
-      techScore: 1.0,
-      usShare: 0.95,
-      caShare: 0.0,
-      intlShare: 0.05,
-      isBond: false,
-    };
-  }
-
-  // All-equity global one-ticket (VEQT/XEQT etc.)
-  if (isAny("VEQT", "XEQT", "VEQT.TO", "XEQT.TO")) {
-    return {
-      techScore: 0.3,
-      usShare: 0.4,
-      caShare: 0.25,
-      intlShare: 0.35,
-      isBond: false,
-    };
-  }
-
-  // Balanced/global growth (VGRO/VBAL etc.)
-  if (isAny("VGRO", "VBAL", "VGRO.TO", "VBAL.TO", "XGRO", "XBAL")) {
-    return {
-      techScore: 0.2,
-      usShare: 0.35,
-      caShare: 0.25,
-      intlShare: 0.4,
-      isBond: false,
-    };
-  }
-
-  // Canada equity (XIU, ZCN, VCN, XIC)
-  if (isAny("XIU", "ZCN", "VCN", "XIC")) {
-    return {
-      techScore: 0.1,
-      usShare: 0.0,
-      caShare: 0.9,
-      intlShare: 0.1,
-      isBond: false,
-    };
-  }
-
-  // International developed (XEF/ZEA)
-  if (isAny("XEF", "ZEA", "VIU")) {
-    return {
-      techScore: 0.15,
-      usShare: 0.0,
-      caShare: 0.0,
-      intlShare: 1.0,
-      isBond: false,
-    };
-  }
-
-  // Emerging markets (XEC/ZEM)
-  if (isAny("XEC", "ZEM", "VEE")) {
-    return {
-      techScore: 0.1,
-      usShare: 0.0,
-      caShare: 0.0,
-      intlShare: 1.0,
-      isBond: false,
-    };
-  }
-
-  // Dividend / value-ish (SCHD, VDY, ZDY)
-  if (isAny("SCHD", "VDY", "ZDY")) {
-    return {
-      techScore: 0.15,
-      usShare: 0.7,
-      caShare: plain === "VDY" ? 0.6 : 0.0,
-      intlShare: plain === "VDY" ? 0.4 : 0.3,
-      isBond: false,
-    };
-  }
-
-  // Fallback: global equity, light tech tilt
-  return base;
+  return "International";
 }
 
-function classifyExposure(exposure: ExposureBreakdown[]): string {
-  if (!exposure.length) return "Diversified";
+function isBond(assetClassRaw: string | null | undefined): boolean {
+  if (!assetClassRaw) return false;
+  const a = assetClassRaw.toLowerCase();
+  return a.includes("bond") || a.includes("fixed income");
+}
 
-  let equityPct = 0;
-  let bondPct = 0;
-  let techTiltScore = 0;
-  let usPct = 0;
-  let caPct = 0;
-  let intlPct = 0;
+function classifyExposure(rows: ApiExposureRow[]): string {
+  if (!rows.length) return "Diversified";
 
-  for (const pos of exposure) {
-    const weight = pos.weightPct ?? 0;
+  let equity = 0;
+  let bonds = 0;
+  let us = 0;
+  let ca = 0;
+  let intl = 0;
+
+  for (const row of rows) {
+    const weight = row.total_weight_pct ?? 0;
     if (weight <= 0) continue;
 
-    const profile = getSymbolProfile(pos.symbol);
-    if (profile.isBond) {
-      bondPct += weight;
+    if (isBond(row.asset_class)) {
+      bonds += weight;
     } else {
-      equityPct += weight;
-      techTiltScore += weight * profile.techScore;
-      usPct += weight * profile.usShare;
-      caPct += weight * profile.caShare;
-      intlPct += weight * profile.intlShare;
+      equity += weight;
+      const region = normalizeCountryToRegion(row.country);
+      if (region === "US") us += weight;
+      else if (region === "Canada") ca += weight;
+      else intl += weight;
     }
   }
 
-  const total = equityPct + bondPct || 1;
-  const normEquity = (equityPct / total) * 100;
-  const normBonds = (bondPct / total) * 100;
-  const normTechTilt = techTiltScore / total;
-  const normUS = usPct / total;
-  const normCA = caPct / total;
-  const normIntl = intlPct / total;
+  const total = equity + bonds || 1;
+  const equityShare = equity / total;
+  const bondShare = bonds / total;
 
-  if (normTechTilt > 0.3) return "Tech-Tilted";
-  if (normTechTilt > 0.2) return "Light Tech Lean";
+  const regionTotal = us + ca + intl || 1;
+  const usShare = us / regionTotal;
+  const caShare = ca / regionTotal;
+  const intlShare = intl / regionTotal;
 
-  if (normUS > 0.5) return "U.S.-Concentrated";
-  if (normCA > 0.35) return "Canada-Tilted";
-  if (normIntl > 0.4) return "International-Heavy";
+  // -----------------------------
+  // 1) Pick dominant region first
+  // -----------------------------
+  let dominantRegion: RegionKey = "International";
+  let dominantShare = intlShare;
 
-  if (normEquity > 80) return "Equity-Heavy";
-  if (normEquity > 60) return "Growth-Oriented";
-  if (normEquity < 40 && normBonds > 30) return "Conservative";
+  if (usShare >= caShare && usShare >= intlShare) {
+    dominantRegion = "US";
+    dominantShare = usShare;
+  } else if (caShare >= usShare && caShare >= intlShare) {
+    dominantRegion = "Canada";
+    dominantShare = caShare;
+  }
+
+  if (dominantRegion === "US" && dominantShare >= 0.5) {
+    return "U.S.-Concentrated";
+  }
+  if (dominantRegion === "Canada" && dominantShare >= 0.3) {
+    return "Canada-Tilted";
+  }
+  if (dominantRegion === "International" && dominantShare >= 0.4) {
+    return "International-Heavy";
+  }
+
+  // -----------------------------
+  // 2) Fall back to risk profile
+  // -----------------------------
+  if (equityShare > 0.8) return "Equity-Heavy";
+  if (equityShare > 0.6) return "Growth-Oriented";
+  if (equityShare < 0.4 && bondShare > 0.3) return "Conservative";
 
   return "Diversified";
 }
@@ -201,9 +143,20 @@ export default function ExposureSummary({
   exposure,
   showHeader = true,
 }: ExposureSummaryProps) {
-  const sorted = React.useMemo(
-    () => [...exposure].sort((a, b) => (b.weightPct ?? 0) - (a.weightPct ?? 0)),
+  // 1) Normalize API rows into the shape the donut expects
+  const normalized = React.useMemo<NormalizedExposure[]>(
+    () =>
+      exposure.map((row) => ({
+        symbol: row.holding_symbol,
+        weightPct: row.total_weight_pct,
+      })),
     [exposure]
+  );
+
+  // 2) Use normalized data for slices
+  const sorted = React.useMemo(
+    () => [...normalized].sort((a, b) => (b.weightPct ?? 0) - (a.weightPct ?? 0)),
+    [normalized]
   );
 
   const total = React.useMemo(
@@ -244,6 +197,41 @@ export default function ExposureSummary({
     return result;
   }, [sorted, total]);
 
+  // Legend display values: force "Other" = 100 - roundedSum(main)
+  const displayPercents: number[] = React.useMemo(() => {
+    if (!slices.length) return [];
+
+    const lastIndex = slices.length - 1;
+    const hasOther = slices[lastIndex]?.label === "Other";
+
+    // If there's no "Other" slice, just round everything normally
+    if (!hasOther) {
+      return slices.map((slice) => Math.round(slice.weightPct ?? 0));
+    }
+
+    // Round main slices (all except "Other")
+    const baseRounded = slices.map((slice, index) =>
+      index === lastIndex ? 0 : Math.round(slice.weightPct ?? 0)
+    );
+
+    const sumMain = baseRounded
+      .slice(0, lastIndex)
+      .reduce((sum, value) => sum + value, 0);
+
+    // Other is whatever remains to reach 100
+    baseRounded[lastIndex] = Math.max(0, 100 - sumMain);
+
+    return baseRounded;
+  }, [slices]);
+
+  // NEW: compute how much of the portfolio the top 5 represent (using true decimals)
+  const topFivePct = React.useMemo(() => {
+    if (!sorted.length || total <= 0) return 0;
+    const MAX_SLICES = 6;
+    const main = sorted.slice(0, MAX_SLICES - 1); // top 5 rows
+    return main.reduce((sum, e) => sum + (e.weightPct ?? 0), 0);
+  }, [sorted, total]);
+
   const RADIUS = 80;
   const STROKE_WIDTH = 26;
   const CENTER = 110;
@@ -267,13 +255,16 @@ export default function ExposureSummary({
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [exposure]);
+  }, [normalized]);
 
   const [hoveredIndex, setHoveredIndex] = React.useState<number | null>(null);
   const hoveredSlice =
     hoveredIndex != null ? slices[hoveredIndex] : null;
 
   let cumulative = 0;
+
+  // Small arc gap (in SVG units) to create a white separator between slices
+  const SEPARATOR = 2; // tweak 1–3 if you want thinner/thicker white lines
 
   return (
     <div className="flex w-full flex-col items-center gap-6 md:flex-row md:items-center md:justify-between md:gap-10">
@@ -282,10 +273,12 @@ export default function ExposureSummary({
         <svg viewBox="0 0 220 220" className="h-full w-full">
           <g transform={`rotate(-90 ${CENTER} ${CENTER})`}>
             {slices.map((slice, index) => {
-              const basePct =
-                total > 0 ? slice.weightPct / total : 0;
+              const basePct = total > 0 ? slice.weightPct / total : 0;
               const pct = basePct * animationProgress;
-              const dash = pct * CIRC;
+              const rawDash = pct * CIRC;
+
+              // shorten each arc slightly so the background shows between slices
+              const dash = Math.max(0, rawDash - SEPARATOR);
               const gap = CIRC - dash;
               const offset = -cumulative * CIRC;
               cumulative += basePct;
@@ -319,7 +312,7 @@ export default function ExposureSummary({
             {classification}
           </p>
           <p className="mt-0.5 text-[11px] text-zinc-500 tabular-nums dark:text-zinc-400">
-            {fmtPercent(total)}% • Top weights only
+            Top 5 represent {fmtPercent(topFivePct)}%
           </p>
         </div>
 
@@ -358,48 +351,45 @@ export default function ExposureSummary({
           {slices.map((slice, index) => (
             <li
               key={`${slice.label}-${index}`}
-              className="flex items-center justify-between"
+              className="flex items-center justify-between gap-4 py-1.5"
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {/* Left: label with responsive text */}
-              <div className="flex items-center gap-2 text-xs sm:text-sm">
+              <div className="flex min-w-0 flex-1 items-center gap-2 text-xs sm:text-sm">
                 <span
-                  className="h-2.5 w-2.5 rounded-full"
+                  className="h-2.5 w-2.5 rounded-full shrink-0"
                   style={{ backgroundColor: slice.color }}
                 />
-                <span className="font-medium text-zinc-800 dark:text-zinc-100">
+                <span className="truncate font-medium text-zinc-800 dark:text-zinc-100">
                   {slice.label}
                 </span>
               </div>
 
-              {/* Right: Apple-like fixed-width % badge */}
+              {/* Right: Apple-like fixed-width % badge, using adjusted displayPercents */}
               <span
                 className="
-                  inline-flex 
-                  w-12
-                  justify-end 
+                  inline-flex
+                  min-w-[2.9rem]
+                  shrink-0
+                  justify-end
                   px-2 py-1
                   rounded-full
                   text-[13px]
-                  leading-none 
+                  leading-none
                   font-medium
-                  text-white 
+                  text-white
                   tabular-nums
                   backdrop-blur-sm
                   ring-1 ring-white/20
                 "
                 style={{ backgroundColor: slice.color }}
               >
-                {fmtPercent(slice.weightPct)}%
+                {(displayPercents[index] ?? Math.round(slice.weightPct ?? 0))}%
               </span>
             </li>
           ))}
         </ul>
-
-        <p className="pt-1 text-[11px] text-zinc-400 dark:text-zinc-500">
-          Showing top {Math.min(slices.length, 6)} exposures in a clean view.
-        </p>
       </div>
     </div>
   );

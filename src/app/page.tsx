@@ -3,30 +3,35 @@
 import * as React from "react";
 import { useState, useMemo, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { UserPosition } from "@/lib/exposureEngine";
 import PortfolioInput from "@/components/PortfolioInput";
-import { DEFAULT_POSITIONS } from "@/data/defaultPositions";
+
+// Local version of UserPosition (matches PortfolioInput + results page)
+type UserPosition = {
+  symbol: string;
+  weightPct: number;
+};
 
 export default function HomePage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const positionsParam = searchParams.get("positions");
 
-  const initialPositions = useMemo<UserPosition[]>(() => {
-    if (!positionsParam) return DEFAULT_POSITIONS;
+const initialPositions = useMemo<UserPosition[]>(() => {
+  if (!positionsParam) return [{ symbol: "", weightPct: 0 }];
 
-    try {
-      const decoded = decodeURIComponent(positionsParam);
-      const parsed = JSON.parse(decoded);
-      if (Array.isArray(parsed)) {
-        return parsed as UserPosition[];
-      }
-    } catch (err) {
-      console.error("Failed to parse positions from URL", err);
+  try {
+    const decoded = decodeURIComponent(positionsParam);
+    const parsed = JSON.parse(decoded);
+    if (Array.isArray(parsed)) {
+      return parsed as UserPosition[];
     }
+  } catch (err) {
+    console.error("Failed to parse positions from URL", err);
+  }
 
-    return DEFAULT_POSITIONS;
-  }, [positionsParam]);
+  return [{ symbol: "", weightPct: 0 }];
+}, [positionsParam]);
+
 
   const [positions, setPositions] = useState<UserPosition[]>(initialPositions);
 

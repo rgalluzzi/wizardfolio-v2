@@ -1,19 +1,25 @@
- "use client";
+"use client";
 
-import { UserPosition } from "@/lib/exposureEngine";
-import { ETF_UNIVERSE } from "@/data/etfUniverse";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { ETF_UNIVERSE } from "@/data/etfUniverse";
+
+type UserPosition = {
+  symbol: string;
+  weightPct: number;
+};
 
 type PortfolioInputProps = {
   positions: UserPosition[];
   onChange: (positions: UserPosition[]) => void;
-  onAnalyze: () => void;
+  onAnalyze: () => void; // parent will call the API
 };
 
 type SymbolSelectorProps = {
   value: string;
   onSelect: (symbol: string) => void;
 };
+
+const MAX_ASSETS = 5;
 
 function SymbolSelector({ value, onSelect }: SymbolSelectorProps) {
   const [query, setQuery] = useState(value);
@@ -53,7 +59,8 @@ function SymbolSelector({ value, onSelect }: SymbolSelectorProps) {
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
         placeholder="Search symbol"
-        className="mt-1 w-full rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-sm outline-none transition focus:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-900"
+        className="mt-1 w-full rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-base sm:text-sm outline-none transition focus:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-900"
+        // ^ text-base on mobile (~16px) to avoid iOS zoom, sm:text-sm on larger screens
       />
       {dropdownVisible && (
         <div className="absolute left-0 right-0 z-10 mt-1 max-h-40 overflow-auto rounded-lg border border-zinc-200 bg-white text-sm shadow-lg dark:border-zinc-700 dark:bg-zinc-900">
@@ -90,6 +97,8 @@ export default function PortfolioInput({
   const hasEmptySymbol = positions.some((p) => !p.symbol.trim());
   const canAnalyze = positions.length > 0 && isTotalValid && !hasEmptySymbol;
 
+  const canAddMore = positions.length < MAX_ASSETS;
+
   const updatePosition = useCallback(
     (index: number, patch: Partial<UserPosition>) => {
       const next = positions.map((p, i) =>
@@ -101,6 +110,7 @@ export default function PortfolioInput({
   );
 
   const addRow = () => {
+    if (!canAddMore) return;
     onChange([...positions, { symbol: "", weightPct: 0 }]);
   };
 
@@ -115,6 +125,9 @@ export default function PortfolioInput({
         <h2 className="text-lg font-semibold">Your portfolio mix</h2>
         <p className="text-sm text-zinc-500 dark:text-zinc-400">
           Enter each asset and its percentage. Aim for a total of 100%.
+        </p>
+        <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500">
+          For this demo you can analyze up to {MAX_ASSETS} ETFs at a time.
         </p>
       </header>
 
@@ -138,7 +151,8 @@ export default function PortfolioInput({
                 Weight %
               </label>
               <input
-                className="mt-1 w-full rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-sm outline-none ring-0 focus:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-900"
+                className="mt-1 w-full rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-base sm:text-sm outline-none ring-0 focus:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-900"
+                // ^ text-base on mobile (~16px) to stop Safari zoom
                 type="number"
                 min={0}
                 max={100}
@@ -185,9 +199,10 @@ export default function PortfolioInput({
           <button
             type="button"
             onClick={addRow}
-            className="inline-flex items-center rounded-full border border-zinc-200 px-3 py-1 text-xs font-medium text-zinc-700 hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            disabled={!canAddMore}
+            className="inline-flex items-center rounded-full border border-zinc-200 px-3 py-1 text-xs font-medium text-zinc-700 hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-40 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
           >
-            + Add asset
+            {canAddMore ? "+ Add asset" : `Max ${MAX_ASSETS} assets`}
           </button>
           <button
             type="button"

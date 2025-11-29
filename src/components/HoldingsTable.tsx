@@ -1,10 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import { ExposureBreakdown } from "@/lib/exposureEngine";
+import { useMemo, useState } from "react";
+
+export type ApiExposureRow = {
+  holding_symbol: string;
+  holding_name: string;
+  country?: string | null;
+  sector?: string | null;
+  asset_class?: string | null;
+  total_weight_pct: number;
+};
+
+type NormalizedHolding = {
+  symbol: string;
+  weightPct: number;
+};
 
 type HoldingsTableProps = {
-  exposure: ExposureBreakdown[];
+  // Now expects the raw rows coming back from /api/etf-exposure
+  exposure: ApiExposureRow[];
   showHeader?: boolean;
   className?: string;
 };
@@ -16,17 +30,30 @@ export default function HoldingsTable({
 }: HoldingsTableProps) {
   const [showAll, setShowAll] = useState(false);
 
-  const limit = 5;
-  const visibleHoldings = showAll ? exposure : exposure.slice(0, limit);
-  const remainingCount = Math.max(0, exposure.length - visibleHoldings.length);
+  // Normalize API rows into the shape the table logic expects
+  const normalized = useMemo<NormalizedHolding[]>(
+    () =>
+      (exposure ?? []).map((row) => ({
+        symbol: row.holding_symbol,
+        weightPct: row.total_weight_pct,
+      })),
+    [exposure]
+  );
 
-  if (!exposure || exposure.length === 0) return null;
+  const limit = 5;
+  const visibleHoldings = showAll ? normalized : normalized.slice(0, limit);
+  const remainingCount = Math.max(
+    0,
+    normalized.length - visibleHoldings.length
+  );
+
+  if (!normalized || normalized.length === 0) return null;
 
   const rootClassName =
     "w-full rounded-2xl border border-zinc-200 bg-white/80 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80";
 
   return (
-    <section className="w-full rounded-2xl border border-zinc-200 bg-white/80 p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/80">
+    <section className={`${rootClassName} ${className}`}>
       {showHeader && (
         <header className="mb-3 flex items-center justify-between">
           <div>
@@ -84,7 +111,7 @@ export default function HoldingsTable({
         ))}
       </div>
 
-      {exposure.length > limit && (
+      {normalized.length > limit && (
         <div className="mt-3 flex justify-end">
           <button
             type="button"
