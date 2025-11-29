@@ -1,23 +1,36 @@
 "use client";
 
 import * as React from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import PortfolioInput from "@/components/PortfolioInput";
+import { DEFAULT_POSITIONS } from "@/data/defaultPositions";
+
+type UserPosition = {
+  symbol: string;
+  weightPct: number;
+};
 
 export default function HomePage() {
   const router = useRouter();
 
-  // Called when the user taps the Analyze button in PortfolioInput
+  // Local positions state drives PortfolioInput
+  const [positions, setPositions] = useState<UserPosition[]>(
+    DEFAULT_POSITIONS as UserPosition[]
+  );
+
   const handleAnalyze = () => {
-    // For now, we just send them to /results.
-    // The results page already falls back to DEFAULT_POSITIONS if there is
-    // no positions query param present.
-    router.push("/results");
+    const encoded = encodeURIComponent(JSON.stringify(positions));
+    router.push(`/results?positions=${encoded}`);
   };
 
   return (
     <div className="space-y-4">
-      <PortfolioInput onAnalyze={handleAnalyze} />
+      <PortfolioInput
+        positions={positions}
+        onChange={setPositions}
+        onAnalyze={handleAnalyze}
+      />
     </div>
   );
 }

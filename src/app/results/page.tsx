@@ -8,6 +8,22 @@ import { DEFAULT_POSITIONS } from "@/data/defaultPositions";
 import { useRouter, useSearchParams } from "next/navigation";
 import { AppleShareIcon } from "@/components/icons/AppleShareIcon";
 import { usePostHogSafe } from "@/lib/usePostHogSafe";
+// src/app/results/page.tsx
+
+import ResultsPageClient from "./ResultsPageClient";
+
+type ResultsPageProps = {
+  searchParams?: {
+    positions?: string;
+  };
+};
+
+export default function ResultsPage({ searchParams }: ResultsPageProps) {
+  return (
+    <ResultsPageClient positionsParam={searchParams?.positions ?? null} />
+  );
+}
+
 
 // Local copy of the position type (no more exposureEngine)
 type UserPosition = {
